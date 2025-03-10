@@ -1,0 +1,281 @@
+/* Import fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Lexend+Deca:wght@400;500&display=swap');
+
+/* CSS Reset for better cross-browser consistency */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  /* Font variables */
+  --font-primary: 'Space Grotesk', sans-serif;
+  --font-secondary: 'Lexend Deca', sans-serif;
+
+  /* Font weight variables */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* Color variables */
+  --primary-background: #121212;
+  --secondary-background-and-frosted-panels: #1f1f1f;
+  --primary-text: #e0e0e0;
+  --secondary-text-and-subheadings: #b3b3b3;
+  --accent-and-dividers: #333333;
+  --optional-pop-accent-for-links-and-buttons: #0a84ff;
+}
+
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background-color: var(--primary-background);
+  color: var(--primary-text);
+  font-family: var(--font-secondary);
+  font-weight: var(--weight-regular);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+
+  // Typography
+
+  h1 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-bold);
+    font-size: 48px;
+    line-height: 120%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h2 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    font-size: 36px;
+    line-height: 130%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    font-size: 30px;
+    line-height: 130%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h4 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    font-size: 24px;
+    line-height: 130%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h5 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    font-size: 20px;
+    line-height: 140%;
+    margin: 0;
+    padding: 0;
+  }
+
+  h6 {
+    font-family: var(--font-primary);
+    font-weight: var(--weight-medium);
+    font-size: 16px;
+    line-height: 140%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .paragraph {
+    font-family: var(--font-secondary);
+    font-weight: var(--weight-regular);
+    font-size: 16px;
+    line-height: 160%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .link {
+    font-family: var(--font-secondary);
+    font-weight: var(--weight-medium);
+    font-size: 16px;
+    line-height: 160%;
+    text-decoration: none;
+    color: var(--primary-text);
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+  }
+
+  .caption {
+    font-family: var(--font-secondary);
+    font-weight: var(--weight-regular);
+    font-size: 12px;
+    line-height: 130%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Media query for responsive typography */
+@media screen and (max-width: 768px) {
+  body {
+    h1 {
+      font-size: 36px;
+    }
+
+    h2 {
+      font-size: 30px;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    h4 {
+      font-size: 20px;
+    }
+
+    h5 {
+      font-size: 18px;
+    }
+
+    h6 {
+      font-size: 16px;
+    }
+  }
+}
+
+/* Fix for iOS Safari 100vh issue */
+@supports (-webkit-touch-callout: none) {
+  .vh-fix {
+    height: -webkit-fill-available;
+  }
+}
