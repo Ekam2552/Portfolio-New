@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import './HamburgerButton.scss';
+import { useAnimationContext } from '../../context/AnimationContext';
 
 interface HamburgerButtonProps {
   isOpen: boolean;
@@ -16,34 +17,38 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
   const topLineRef = useRef<HTMLDivElement>(null);
   const middleLineRef = useRef<HTMLDivElement>(null);
   const bottomLineRef = useRef<HTMLDivElement>(null);
+  
+  // Use the animation context to know when to start animations
+  const { loaderComplete, timing } = useAnimationContext();
 
-  // Initial reveal animation when component mounts
-  useGSAP(
-    () => {
-      if (
-        !buttonRef.current ||
-        !topLineRef.current ||
-        !middleLineRef.current ||
-        !bottomLineRef.current
-      )
-        return;
+  // Initial reveal animation when loader completes
+  useEffect(() => {
+    if (
+      !loaderComplete ||
+      !buttonRef.current ||
+      !topLineRef.current ||
+      !middleLineRef.current ||
+      !bottomLineRef.current
+    )
+      return;
 
-      // Set up initial state - lines hidden but button container visible
-      gsap.set(
-        [topLineRef.current, middleLineRef.current, bottomLineRef.current],
-        {
-          width: '0%',
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: 0,
-        }
-      );
+    // Immediately set up initial state - lines hidden
+    gsap.set(
+      [topLineRef.current, middleLineRef.current, bottomLineRef.current],
+      {
+        width: '0%',
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotation: 0,
+      }
+    );
 
-      // Create a timeline for the reveal animation
-      const tl = gsap.timeline({ delay: 0.3 });
+    // Create a timeline for the reveal animation with delay
+    const timer = setTimeout(() => {
+      const tl = gsap.timeline();
 
-      // Make lines appear without using curtain effect (simpler and more reliable)
+      // Make lines appear without using curtain effect
       tl.to(topLineRef.current, {
         width: '100%',
         duration: 0.7,
@@ -67,13 +72,12 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
           },
           '-=0.4'
         );
+    }, timing.POST_LOADER_DELAY);
 
-      return () => {
-        tl.kill();
-      };
-    },
-    { scope: buttonRef }
-  );
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [loaderComplete, timing]);
 
   // Animation for toggling between hamburger and close
   useGSAP(

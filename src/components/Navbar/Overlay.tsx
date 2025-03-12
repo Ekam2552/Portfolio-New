@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import './Overlay.scss';
+import { useAnimationContext } from '../../context/AnimationContext';
 
 interface OverlayProps {
   menuOpen?: boolean;
@@ -10,27 +11,40 @@ interface OverlayProps {
 const Overlay: React.FC<OverlayProps> = ({ menuOpen = false }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   
-  // Initial reveal animation when the component mounts
-  useGSAP(() => {
-    if (overlayRef.current) {
-      // Start with the overlay hidden
-      gsap.set(overlayRef.current, { 
-        opacity: 0,
-        backdropFilter: 'blur(0px)',
-        webkitBackdropFilter: 'blur(0px)'
+  // Use the animation context to know when to start animations
+  const { loaderComplete, timing } = useAnimationContext();
+  
+  // Initial reveal animation when the loader completes
+  useEffect(() => {
+    if (!overlayRef.current || !loaderComplete) return;
+    
+    // Immediately hide the overlay
+    gsap.set(overlayRef.current, { 
+      opacity: 0,
+      backdropFilter: 'blur(0px)',
+      webkitBackdropFilter: 'blur(0px)',
+      visibility: 'hidden' // Ensure it's completely hidden initially
+    });
+    
+    // Add delay to ensure loader is completely gone
+    const timer = setTimeout(() => {
+      // First make it visible but still transparent
+      gsap.set(overlayRef.current, {
+        visibility: 'visible'
       });
       
-      // Animate the overlay in
+      // Then animate the overlay in
       gsap.to(overlayRef.current, {
         opacity: 1,
         backdropFilter: 'blur(15px)',
         webkitBackdropFilter: 'blur(15px)',
         duration: 1.2,
-        ease: 'power2.out',
-        delay: 0.2
+        ease: 'power2.out'
       });
-    }
-  }, { scope: overlayRef }); // Scope to overlayRef for cleanup
+    }, timing.POST_LOADER_DELAY);
+    
+    return () => clearTimeout(timer);
+  }, [loaderComplete, timing]);
   
   // Animation when menu opens/closes
   useGSAP(() => {

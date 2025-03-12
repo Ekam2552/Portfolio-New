@@ -9,6 +9,9 @@
   /* Ensure navbar content is above the overlay */
   z-index: 10; /* Increased to prevent elements going behind overlay */
 
+  /* Remove any accidental overflow */
+  overflow: visible;
+
   h2 {
     /* Add specific styles for the logo/title to ensure it's visible above the overlay */
     z-index: 1002; /* Increase z-index to keep above everything */
@@ -66,7 +69,18 @@
     transform: translateX(100%); /* Start off-screen */
     opacity: 0;
     pointer-events: none; /* Don't capture clicks when hidden */
-    overflow-y: auto; /* Allow scrolling if needed */
+
+    /* Only show vertical scrollbar when actually needed */
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+
+    /* Hide scrollbar when not needed */
+    &::-webkit-scrollbar {
+      width: 0px; /* Hide scrollbar for Chrome/Safari/Edge */
+    }
+
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
 
     /* Active state */
     &.active {

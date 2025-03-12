@@ -7,10 +7,11 @@ import {
   applyActiveLinkAnimation,
 } from '../../utils/animations/navbarLinkAnimations';
 import {
-  useCurtainRevealAnimation,
   setupCurtainForHiddenElements,
+  applyCurtainRevealToElement,
 } from '../../utils/animations/textRevealAnimations';
 import { gsap } from 'gsap';
+import { useAnimationContext } from '../../context/AnimationContext';
 
 // TODO: Add a text reveal animation to the navbar title and links.
 
@@ -21,23 +22,55 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const activeLinkCleanupRef = useRef<(() => void) | null>(null);
 
+  // Use the animation context to know when to start animations
+  const { loaderComplete, timing } = useAnimationContext();
+
   // Use the navbar link animations hook with type assertion
   useNavbarLinkAnimations(navbarRef as unknown as React.RefObject<HTMLElement>);
 
-  // Apply curtain reveal animation to title and nav links
-  useCurtainRevealAnimation(
-    navbarRef as unknown as React.RefObject<HTMLElement>,
-    {
+  // Effect to prepare and apply curtain reveal animation after loader completes
+  useEffect(() => {
+    if (!navbarRef.current || !loaderComplete) return;
+
+    // Get all text elements that need curtain reveal
+    const textElements = navbarRef.current?.querySelectorAll('.reveal-text');
+    if (!textElements || textElements.length === 0) return;
+
+    // Phase 1: Setup all curtains but keep them covering the text
+    // Use the setup function to create curtain elements properly
+    const elements = setupCurtainForHiddenElements(navbarRef.current, {
       textSelector: '.reveal-text',
-      direction: 'left',
-      duration: 1.5,
-      stagger: 0.15,
-      ease: 'power3.out',
-      start: 'top 80%',
-      markers: false,
       curtainColor: 'var(--primary-background)',
-    }
-  );
+    });
+
+    // Make sure curtains are properly positioned to cover text
+    elements.forEach((element) => {
+      const curtain = (element as HTMLElement).parentElement?.querySelector(
+        '.text-curtain'
+      ) as HTMLElement;
+      if (curtain) {
+        // Ensure curtain is covering the text
+        curtain.style.transformOrigin = 'left center';
+        gsap.set(curtain, { x: 0, y: 0 });
+      }
+    });
+
+    // Phase 2: After delay, animate the curtains away
+    const timer = setTimeout(() => {
+      textElements.forEach((element, index) => {
+        // Apply the proper curtain reveal animation with staggered delay
+        applyCurtainRevealToElement(element as HTMLElement, {
+          direction: 'left',
+          duration: 1.5,
+          ease: 'power3.out',
+          delay: index * timing.DEFAULT_STAGGER,
+          curtainColor: 'var(--primary-background)',
+        });
+      });
+    }, timing.POST_LOADER_DELAY);
+
+    return () => clearTimeout(timer);
+  }, [loaderComplete, timing]);
 
   // Function to handle link clicks
   const handleLinkClick = (linkName: string) => {
