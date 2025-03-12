@@ -1,0 +1,48 @@
+.hamburger-button {
+  display: none; /* Hidden by default */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute; /* Change to absolute positioning */
+  right: 20px; /* Position at the right side with some margin */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Center vertically */
+  width: 40px;
+  height: 40px;
+  z-index: 1001; /* Ensure it stays above everything else */
+
+  &:focus {
+    outline: none;
+  }
+
+  /* The lines that make up the hamburger/close icon */
+  .hamburger-line {
+    max-width: 24px;
+    width: 24px; /* Default width - will be animated */
+    height: 2px;
+    background-color: var(--secondary-text-and-subheadings);
+    display: block;
+    margin: 5px auto;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+    transform-origin: center;
+    position: relative;
+
+    /* For browsers that don't support GSAP animations as fallback */
+    &:first-child {
+      transform-origin: top left;
+    }
+
+    &:last-child {
+      transform-origin: bottom left;
+    }
+  }
+
+  /* Media query for mobile devices */
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,5 +1,149 @@
 .navbar {
   width: 100%;
-  height: 100px;
-  background-color: var(--optional-pop-accent-for-links-and-buttons);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  /* Position relative so the absolutely positioned Overlay is contained within */
+  position: relative;
+  /* Ensure navbar content is above the overlay */
+  z-index: 10; /* Increased to prevent elements going behind overlay */
+
+  h2 {
+    /* Add specific styles for the logo/title to ensure it's visible above the overlay */
+    z-index: 1002; /* Increase z-index to keep above everything */
+    position: relative;
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+
+    /* Ensure links are above the overlay */
+    position: relative;
+    z-index: 10; /* Increased */
+
+    .link {
+      cursor: pointer;
+      transition: color 0.2s ease;
+      position: relative;
+
+      /* Make anchor tags display as expected */
+      text-decoration: none;
+      display: inline-block;
+
+      /* Ensure enough padding for hover effects */
+      padding: 5px 2px;
+
+      /* Remove default browser focus outline */
+      &:focus {
+        outline: none;
+      }
+
+      /* Active link styles */
+      &.active {
+        color: var(--optional-pop-accent-for-links-and-buttons);
+        font-weight: var(--weight-medium);
+      }
+    }
+  }
+
+  /* Mobile menu styles */
+  .mobile-menu {
+    /* Always use fixed positioning */
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0; /* Cover full width */
+    width: 100%;
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100); /* Mobile viewport fix */
+    background-color: var(
+      --primary-background
+    ); /* Solid background is more reliable */
+    z-index: 1000; /* Higher than navbar but lower than hamburger */
+    transform: translateX(100%); /* Start off-screen */
+    opacity: 0;
+    pointer-events: none; /* Don't capture clicks when hidden */
+    overflow-y: auto; /* Allow scrolling if needed */
+
+    /* Active state */
+    &.active {
+      display: block;
+      transform: translateX(0); /* Fallback if JS doesn't work */
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Left aligned as requested */
+      padding: 100px 30px 30px; /* Space for the navbar at top */
+      gap: 30px;
+
+      .link {
+        font-size: 24px; /* Larger touch targets for mobile */
+        padding: 10px 0;
+        transition: color 0.2s ease, transform 0.3s ease, padding-left 0.3s ease;
+        width: 100%; /* Full width for easier tapping */
+        position: relative; /* For border-left positioning */
+        border-left: 2px solid transparent; /* Transparent border initially */
+        padding-left: 0; /* No padding initially */
+
+        /* Hover effect only for non-active links */
+        &:not(.active):hover,
+        &:not(.active):active {
+          transform: translateX(5px);
+        }
+
+        /* Style for the active link in mobile menu */
+        &.active {
+          color: var(--optional-pop-accent-for-links-and-buttons);
+          transform: translateX(
+            10px
+          ); /* Indent active link slightly to the right */
+          border-left: 2px solid
+            var(--optional-pop-accent-for-links-and-buttons);
+          padding-left: 10px;
+
+          /* Special hover effect for active link */
+          &:hover {
+            transform: translateX(12px); /* Slightly more indent on hover */
+          }
+        }
+      }
+    }
+  }
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none; /* Hide desktop navigation on mobile */
+    }
+
+    /* Add a bit more space for the hamburger button */
+    padding-right: 50px;
+
+    /* Ensure mobile menu container is displayed */
+    .mobile-menu {
+      /* No need for display: block; here as we'll handle that in JS */
+      display: block;
+    }
+  }
+
+  /* Landscape orientation adjustments */
+  @media (max-width: 768px) and (max-height: 500px) and (orientation: landscape) {
+    .mobile-menu {
+      .mobile-links {
+        padding-top: 70px; /* Less top padding in landscape */
+        gap: 15px;
+
+        .link {
+          font-size: 20px; /* Slightly smaller font in landscape */
+        }
+      }
+    }
+  }
 }

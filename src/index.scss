@@ -162,6 +162,7 @@ body {
   h1 {
     font-family: var(--font-primary);
     font-weight: var(--weight-bold);
+    color: var(--primary-text);
     font-size: 48px;
     line-height: 120%;
     margin: 0;
@@ -171,6 +172,7 @@ body {
   h2 {
     font-family: var(--font-primary);
     font-weight: var(--weight-medium);
+    color: var(--primary-text);
     font-size: 36px;
     line-height: 130%;
     margin: 0;
@@ -180,6 +182,7 @@ body {
   h3 {
     font-family: var(--font-primary);
     font-weight: var(--weight-medium);
+    color: var(--primary-text);
     font-size: 30px;
     line-height: 130%;
     margin: 0;
@@ -189,6 +192,7 @@ body {
   h4 {
     font-family: var(--font-primary);
     font-weight: var(--weight-medium);
+    color: var(--primary-text);
     font-size: 24px;
     line-height: 130%;
     margin: 0;
@@ -198,6 +202,7 @@ body {
   h5 {
     font-family: var(--font-primary);
     font-weight: var(--weight-medium);
+    color: var(--primary-text);
     font-size: 20px;
     line-height: 140%;
     margin: 0;
@@ -207,6 +212,7 @@ body {
   h6 {
     font-family: var(--font-primary);
     font-weight: var(--weight-medium);
+    color: var(--primary-text);
     font-size: 16px;
     line-height: 140%;
     margin: 0;
@@ -216,6 +222,7 @@ body {
   .paragraph {
     font-family: var(--font-secondary);
     font-weight: var(--weight-regular);
+    color: var(--secondary-text-and-subheadings);
     font-size: 16px;
     line-height: 160%;
     margin: 0;
@@ -225,10 +232,10 @@ body {
   .link {
     font-family: var(--font-secondary);
     font-weight: var(--weight-medium);
+    color: var(--secondary-text-and-subheadings);
     font-size: 16px;
     line-height: 160%;
     text-decoration: none;
-    color: var(--primary-text);
     cursor: pointer;
     margin: 0;
     padding: 0;
@@ -237,6 +244,7 @@ body {
   .caption {
     font-family: var(--font-secondary);
     font-weight: var(--weight-regular);
+    color: var(--secondary-text-and-subheadings);
     font-size: 12px;
     line-height: 130%;
     margin: 0;

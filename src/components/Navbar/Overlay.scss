@@ -1,0 +1,58 @@
+.navbar-overlay {
+  /* Dimensions - using percentage width for responsiveness */
+  width: calc(100% - 30px); /* 15px on each side = 30px total */
+  max-width: 1310px; /* Max width from the design */
+  height: 79px;
+
+  /* Position - absolute to ignore auto layout */
+  position: absolute;
+  left: 15px;
+  top: 0;
+
+  /* Appearance */
+  opacity: 1; /* 100% */
+  border-radius: 0px;
+
+  /* Radial gradient fill */
+  background: radial-gradient(
+    circle,
+    rgba(31, 31, 31, 0.6) 0%,
+    rgba(18, 18, 18, 0.1) 100%
+  );
+
+  /* Layer blur effect */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  /* For browsers that don't support backdrop-filter */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(15px);
+    -webkit-filter: blur(15px);
+    z-index: -1;
+  }
+
+  /* Additional filter effect for the blur */
+  filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
+
+  /* Z-index to position it behind navbar content but above the background */
+  z-index: 1;
+
+  /* Media query for smaller screens */
+  @media screen and (max-width: 768px) {
+    height: 70px; /* Slightly smaller height for mobile */
+    left: 10px;
+    width: calc(100% - 20px); /* 10px on each side = 20px total */
+  }
+
+  /* Fixed zIndex issue when mobile menu is open to appear behind content */
+  &.menu-open {
+    z-index: 5; /* Lower than hamburger and nav items but higher than background */
+  }
+}
