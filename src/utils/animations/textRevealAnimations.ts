@@ -173,9 +173,9 @@ const setupCurtainElements = (
   curtain.className = 'text-curtain';
   curtain.style.position = 'absolute';
   curtain.style.top = '0';
-  curtain.style.left = '0';
-  curtain.style.width = '100%';
-  curtain.style.height = '100%';
+  curtain.style.left = '-1px'; // Slight overlap to prevent edge artifacts
+  curtain.style.width = 'calc(100% + 2px)'; // Add 2px to ensure full coverage
+  curtain.style.height = '101%'; // Slightly taller to ensure complete coverage
   curtain.style.backgroundColor = curtainColor;
   curtain.style.zIndex = '2';
 
@@ -224,15 +224,15 @@ export const applyCurtainRevealToElement = (
     return gsap.to(curtainElement, {
       x:
         options.direction === 'left'
-          ? '-100%'
+          ? '-101%' // Slightly more than 100% to ensure complete exit
           : options.direction === 'right'
-          ? '100%'
+          ? '101%' // Slightly more than 100% to ensure complete exit
           : 0,
       y:
         options.direction === 'top'
-          ? '-100%'
+          ? '-101%' // Slightly more than 100% to ensure complete exit
           : options.direction === 'bottom'
-          ? '100%'
+          ? '101%' // Slightly more than 100% to ensure complete exit
           : 0,
       duration: options.duration,
       ease: options.ease,

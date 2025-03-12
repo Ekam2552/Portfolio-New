@@ -1,0 +1,220 @@
+.hero {
+  position: relative;
+  width: 100%;
+  /* 
+  * Calculate the height by taking 100vh and subtracting the navbar height
+  * This ensures that Navbar + Hero = 100vh
+  */
+  height: calc(100vh - var(--navbar-height, 80px) - 90px);
+  overflow: hidden;
+
+  /* Improve curtain animation display */
+  .reveal-text {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Support for text-curtain elements with improved edge handling */
+  .text-reveal-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    z-index: 10; /* Ensure it's above other elements */
+
+    /* Fix for text edges showing through */
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background-color: transparent;
+    }
+
+    .text-curtain {
+      position: absolute;
+      top: 0;
+      left: -1px; /* Slight overlap to prevent edge visibility */
+      width: calc(100% + 2px); /* Extra width to fully cover content */
+      height: 101%; /* Extra height to prevent edge artifacts */
+      background-color: var(--primary-background);
+      z-index: 2;
+    }
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-video {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover; /* This ensures the video covers the container without distortion */
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-background);
+    opacity: 1; /* Initial opacity set to 1 (fully opaque) for animation */
+    z-index: 1; /* Ensures the overlay is above the video */
+    will-change: opacity; /* Optimize for opacity animation */
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    max-width: 1340px;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+
+    .home-title {
+      max-width: 651px;
+
+      h1 {
+        /* Ensure the text container is properly positioned for the curtain animation */
+        position: relative;
+        display: inline-block;
+      }
+
+      .paragraph {
+        margin-top: 40px;
+        max-width: 534px;
+        position: relative;
+        display: inline-block;
+      }
+    }
+
+    .hero-down-arrow {
+      position: relative;
+
+      img {
+        visibility: hidden; // Keep this for animation
+        opacity: 0; // Keep this for animation
+      }
+
+      h4 {
+        max-width: 76px;
+        position: absolute;
+        bottom: 35%;
+        right: -5%;
+        visibility: hidden; // Keep this for animation
+        opacity: 0; // Keep this for animation
+      }
+    }
+  }
+
+  /* Media query for tablets and smaller desktops */
+  @media screen and (max-width: 1400px) {
+    .hero-content {
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 40px;
+      gap: 50px;
+
+      .home-title {
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .paragraph {
+          max-width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+
+      .hero-down-arrow {
+        transform: scale(0.8);
+      }
+    }
+  }
+
+  /* Media query for mobile devices */
+  @media screen and (max-width: 768px) {
+    /* Adjust height to account for smaller navbar on mobile */
+
+    .hero-content {
+      padding: 0 20px;
+      gap: 0;
+
+      .home-title {
+        margin-bottom: 0;
+        height: 70%;
+
+        h1 {
+          /* Typography is already handled in index.scss for h1 */
+          /* font-size is reduced to 36px on mobile */
+          font-size: 36px;
+          max-width: 100%;
+          margin-bottom: 0;
+        }
+
+        .paragraph {
+          transform: scale(0.8);
+          margin-top: 24px;
+          max-width: 100%;
+        }
+      }
+
+      .hero-down-arrow {
+        transform: scale(0.5);
+      }
+    }
+  }
+
+  /* Landscape mode adjustments */
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    .hero-content {
+      padding-top: 30px;
+      align-items: flex-start;
+
+      .home-title {
+        margin-bottom: 20px;
+
+        h1 {
+          font-size: 28px;
+        }
+
+        .paragraph {
+          margin-top: 15px;
+          font-size: 14px;
+        }
+      }
+
+      .hero-down-arrow {
+        display: none; /* Hide down arrow in landscape to save space */
+      }
+    }
+  }
+
+  /* Fix for iOS Safari 100vh issue */
+  @supports (-webkit-touch-callout: none) {
+    height: calc(100% - var(--navbar-height, 80px) - 90px);
+
+    @media screen and (max-width: 768px) {
+      height: calc(100% - var(--navbar-height-mobile, 70px) - 40px);
+    }
+  }
+}

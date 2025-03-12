@@ -4,7 +4,7 @@ import './App.scss';
 // Components
 import Navbar from './components/Navbar/Navbar';
 import Loader from './components/Loader/Loader';
-
+import Hero from './components/Hero/Hero';
 // Animation Context
 import { AnimationProvider } from './context/AnimationContext';
 
@@ -39,6 +39,7 @@ function App() {
       <div className={`App ${contentVisible ? 'visible' : 'hidden'}`}>
         <Navbar />
         {/* Other components will go here */}
+        <Hero />
       </div>
     </AnimationProvider>
   );
