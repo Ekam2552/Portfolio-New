@@ -1,0 +1,36 @@
+.about {
+  width: 100%;
+  /* 
+  * Calculate the height by taking 100vh and subtracting the navbar height
+  * This ensures that Navbar + Hero = 100vh
+  */
+  height: calc(100vh - var(--navbar-height, 80px) - 90px);
+  overflow: hidden;
+  display: flex;
+
+  .about-content {
+    height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    p {
+      margin-top: 20px;
+      max-width: 595px;
+      white-space: pre-line;
+    }
+  }
+
+  .about-images {
+    height: 100%;
+    flex-grow: 1 1 auto;
+    max-width: 300px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

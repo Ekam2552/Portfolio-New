@@ -102,24 +102,6 @@
         display: inline-block;
       }
     }
-
-    .hero-down-arrow {
-      position: relative;
-
-      img {
-        visibility: hidden; // Keep this for animation
-        opacity: 0; // Keep this for animation
-      }
-
-      h4 {
-        max-width: 76px;
-        position: absolute;
-        bottom: 35%;
-        right: -5%;
-        visibility: hidden; // Keep this for animation
-        opacity: 0; // Keep this for animation
-      }
-    }
   }
 
   /* Media query for tablets and smaller desktops */
@@ -143,10 +125,6 @@
           margin-left: auto;
           margin-right: auto;
         }
-      }
-
-      .hero-down-arrow {
-        transform: scale(0.8);
       }
     }
   }
@@ -177,10 +155,6 @@
           max-width: 100%;
         }
       }
-
-      .hero-down-arrow {
-        transform: scale(0.5);
-      }
     }
   }
 
@@ -201,10 +175,6 @@
           margin-top: 15px;
           font-size: 14px;
         }
-      }
-
-      .hero-down-arrow {
-        display: none; /* Hide down arrow in landscape to save space */
       }
     }
   }

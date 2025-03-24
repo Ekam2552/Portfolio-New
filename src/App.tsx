@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
-import './App.scss';
+import { useState, useEffect } from "react";
+import "./App.scss";
 
 // Components
-import Navbar from './components/Navbar/Navbar';
-import Loader from './components/Loader/Loader';
-import Hero from './components/Hero/Hero';
+import Navbar from "./components/Navbar/Navbar";
+import Loader from "./components/Loader/Loader";
+import Hero from "./components/Hero/Hero";
+import About from "./components/About/About";
 // Animation Context
-import { AnimationProvider } from './context/AnimationContext';
+import { AnimationProvider } from "./context/AnimationContext";
+
+// TODO: Create state for Navbar link selected and display only that component.
 
 function App() {
   // State to manage content visibility
@@ -17,10 +20,10 @@ function App() {
     if (contentVisible) {
       // Short delay to ensure DOM is ready before enabling scroll
       setTimeout(() => {
-        document.body.style.overflow = ''; // Re-enable scrolling
+        document.body.style.overflow = ""; // Re-enable scrolling
       }, 100);
     } else {
-      document.body.style.overflow = 'hidden'; // Prevent scrolling during loader
+      document.body.style.overflow = "hidden"; // Prevent scrolling during loader
     }
   }, [contentVisible]);
 
@@ -36,10 +39,10 @@ function App() {
       <Loader onComplete={handleLoaderComplete} duration={7} />
 
       {/* Main app content - always render but control visibility with CSS */}
-      <div className={`App ${contentVisible ? 'visible' : 'hidden'}`}>
+      <div className={`App ${contentVisible ? "visible" : "hidden"}`}>
         <Navbar />
         {/* Other components will go here */}
-        <Hero />
+        <About />
       </div>
     </AnimationProvider>
   );
