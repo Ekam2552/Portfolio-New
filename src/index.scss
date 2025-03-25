@@ -94,6 +94,8 @@ video {
   padding: 0;
   border: 0;
   vertical-align: baseline;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* HTML5 display-role reset for older browsers */
