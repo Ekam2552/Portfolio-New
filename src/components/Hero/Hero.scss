@@ -20,10 +20,11 @@
     overflow: hidden;
     display: inline-block;
     z-index: 10; /* Ensure it's above other elements */
+    vertical-align: top; /* Ensure consistent vertical alignment */
 
     /* Fix for text edges showing through */
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
@@ -88,18 +89,27 @@
 
     .home-title {
       max-width: 651px;
+      display: flex;
+      flex-direction: column;
 
       h1 {
         /* Ensure the text container is properly positioned for the curtain animation */
         position: relative;
         display: inline-block;
+        margin-bottom: 0; /* Remove any bottom margin */
       }
 
       .paragraph {
-        margin-top: 40px;
+        margin-top: 40px !important; /* Use !important to ensure this margin is always applied */
         max-width: 534px;
         position: relative;
         display: inline-block;
+      }
+
+      /* Ensure consistent spacing with animation wrappers */
+      h1 + .text-reveal-wrapper,
+      .text-reveal-wrapper + .text-reveal-wrapper {
+        margin-top: 40px;
       }
     }
   }
@@ -139,7 +149,7 @@
 
       .home-title {
         margin-bottom: 0;
-        height: 70%;
+        height: auto;
 
         h1 {
           /* Typography is already handled in index.scss for h1 */
@@ -150,8 +160,8 @@
         }
 
         .paragraph {
+          margin-top: 24px !important; /* Use !important to override for mobile */
           transform: scale(0.8);
-          margin-top: 24px;
           max-width: 100%;
         }
       }
@@ -172,7 +182,7 @@
         }
 
         .paragraph {
-          margin-top: 15px;
+          margin-top: 15px !important; /* Use !important to override for landscape */
           font-size: 14px;
         }
       }

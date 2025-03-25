@@ -9,11 +9,14 @@ import About from "./components/About/About";
 // Animation Context
 import { AnimationProvider } from "./context/AnimationContext";
 
-// TODO: Create state for Navbar link selected and display only that component.
+// Sections type for type safety
+export type SectionType = "Home" | "About" | "Projects" | "Contact";
 
 function App() {
   // State to manage content visibility
   const [contentVisible, setContentVisible] = useState(false);
+  // State to manage active section
+  const [activeSection, setActiveSection] = useState<SectionType>("Home");
 
   // Effect to handle scrolling
   useEffect(() => {
@@ -33,6 +36,11 @@ function App() {
     setContentVisible(true);
   };
 
+  // Handle section change from navbar
+  const handleSectionChange = (section: SectionType) => {
+    setActiveSection(section);
+  };
+
   return (
     <AnimationProvider>
       {/* Loader component */}
@@ -40,9 +48,15 @@ function App() {
 
       {/* Main app content - always render but control visibility with CSS */}
       <div className={`App ${contentVisible ? "visible" : "hidden"}`}>
-        <Navbar />
-        {/* Other components will go here */}
-        <About />
+        <Navbar
+          activeSection={activeSection}
+          onSectionChange={handleSectionChange}
+        />
+
+        {/* Render sections based on active section */}
+        {activeSection === "Home" && <Hero />}
+        {activeSection === "About" && <About />}
+        {/* Other sections will be added later */}
       </div>
     </AnimationProvider>
   );

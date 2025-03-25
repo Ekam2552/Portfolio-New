@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import "./Hero.scss";
 import { useAnimationContext } from "../../context/AnimationContext";
 import {
@@ -10,8 +11,8 @@ import {
 
 import heroVideo from "../../assets/Hero_Video.mp4";
 
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+// Register plugins
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 // TODO: Create the Hero component
 
@@ -25,66 +26,105 @@ const Hero = () => {
   // Get the loader completion state from context
   const { loaderComplete, timing } = useAnimationContext();
 
-  // Effect to animate the video overlay opacity
-  useEffect(() => {
-    if (!overlayRef.current || !loaderComplete) return;
+  // Cleanup function to remove animation-related elements
+  const cleanupAnimationElements = () => {
+    if (!heroRef.current) return;
 
-    // Start with fully opaque overlay (opacity 1)
-    gsap.set(overlayRef.current, { opacity: 1 });
+    // Find all text elements with reveal-text class
+    const textElements = heroRef.current.querySelectorAll(".reveal-text");
 
-    // After a short delay, animate to final opacity
-    const timer = setTimeout(() => {
-      gsap.to(overlayRef.current, {
-        opacity: 0.7,
-        duration: 2,
-        ease: "power2.inOut",
-      });
-    }, timing.POST_LOADER_DELAY);
+    textElements.forEach((element) => {
+      const el = element as HTMLElement;
+      const parent = el.parentElement;
 
-    return () => clearTimeout(timer);
-  }, [loaderComplete, timing]);
+      // If wrapped in a text-reveal-wrapper, unwrap it
+      if (parent?.classList.contains("text-reveal-wrapper")) {
+        const grandParent = parent.parentElement;
+        if (grandParent) {
+          // Preserve the original margin-top
+          const computedStyle = window.getComputedStyle(parent);
+          el.style.marginTop = computedStyle.marginTop;
 
-  // Effect to prepare and apply curtain reveal animation after loader completes
-  useEffect(() => {
-    if (!heroRef.current || !loaderComplete) return;
-
-    // Get all text elements that need curtain reveal
-    const textElements = heroRef.current?.querySelectorAll(".reveal-text");
-    if (!textElements || textElements.length === 0) return;
-
-    // Phase 1: Setup all curtains but keep them covering the text
-    const elements = setupCurtainForHiddenElements(heroRef.current, {
-      textSelector: ".reveal-text",
-      curtainColor: "var(--primary-background)",
-    });
-
-    // Make sure curtains are properly positioned to cover text
-    elements.forEach((element) => {
-      const curtain = (element as HTMLElement).parentElement?.querySelector(
-        ".text-curtain"
-      ) as HTMLElement;
-      if (curtain) {
-        // Ensure curtain is covering the text
-        curtain.style.transformOrigin = "left center";
+          // Unwrap the element
+          grandParent.insertBefore(el, parent);
+          grandParent.removeChild(parent);
+        }
       }
     });
+  };
 
-    // Phase 2: After delay, animate the curtains away
-    const timer = setTimeout(() => {
-      textElements.forEach((element, index) => {
-        // Apply the proper curtain reveal animation with staggered delay
-        applyCurtainRevealToElement(element as HTMLElement, {
-          direction: "left",
-          duration: 1.5,
-          ease: "power3.out",
-          delay: index * timing.DEFAULT_STAGGER,
-          curtainColor: "var(--primary-background)",
+  // Animation for the video overlay opacity
+  useGSAP(
+    () => {
+      if (!overlayRef.current || !loaderComplete) return;
+
+      // Start with fully opaque overlay (opacity 1)
+      gsap.set(overlayRef.current, { opacity: 1 });
+
+      // After a short delay, animate to final opacity
+      const timer = setTimeout(() => {
+        gsap.to(overlayRef.current, {
+          opacity: 0.7,
+          duration: 2,
+          ease: "power2.inOut",
         });
-      });
-    }, timing.POST_LOADER_DELAY + 200); // Add a bit more delay after navbar animations
+      }, timing.POST_LOADER_DELAY);
 
-    return () => clearTimeout(timer);
-  }, [loaderComplete, timing]);
+      return () => clearTimeout(timer);
+    },
+    { dependencies: [loaderComplete, timing], scope: heroRef }
+  );
+
+  // Text reveal animations after loader completes
+  useGSAP(
+    () => {
+      if (!heroRef.current || !loaderComplete) return;
+
+      // Clean up any existing animation elements
+      cleanupAnimationElements();
+
+      // Get all text elements that need curtain reveal
+      const textElements = heroRef.current?.querySelectorAll(".reveal-text");
+      if (!textElements || textElements.length === 0) return;
+
+      // Phase 1: Setup all curtains but keep them covering the text
+      const elements = setupCurtainForHiddenElements(heroRef.current, {
+        textSelector: ".reveal-text",
+        curtainColor: "var(--primary-background)",
+      });
+
+      // Make sure curtains are properly positioned to cover text
+      elements.forEach((element) => {
+        const curtain = (element as HTMLElement).parentElement?.querySelector(
+          ".text-curtain"
+        ) as HTMLElement;
+        if (curtain) {
+          // Ensure curtain is covering the text
+          curtain.style.transformOrigin = "left center";
+        }
+      });
+
+      // Phase 2: After delay, animate the curtains away
+      const timer = setTimeout(() => {
+        textElements.forEach((element, index) => {
+          // Apply the proper curtain reveal animation with staggered delay
+          applyCurtainRevealToElement(element as HTMLElement, {
+            direction: "left",
+            duration: 1.5,
+            ease: "power3.out",
+            delay: index * timing.DEFAULT_STAGGER,
+            curtainColor: "var(--primary-background)",
+          });
+        });
+      }, timing.POST_LOADER_DELAY + 200); // Add a bit more delay after navbar animations
+
+      return () => {
+        clearTimeout(timer);
+        cleanupAnimationElements();
+      };
+    },
+    { dependencies: [loaderComplete, timing], scope: heroRef }
+  );
 
   return (
     <div className="hero" ref={heroRef}>
