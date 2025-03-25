@@ -131,8 +131,22 @@
     }
   }
 
+  /* Tablet and landscape mobile breakpoint */
+  @media (max-width: 1100px) {
+    /* Adjust navbar spacing for tablets */
+    padding: 18px 0;
+
+    .navbar-links {
+      gap: 25px; /* Slightly smaller gap between links */
+
+      .link {
+        font-size: 15px; /* Match global typography */
+      }
+    }
+  }
+
   /* Responsive styles */
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .desktop-nav {
       display: none; /* Hide desktop navigation on mobile */
     }
@@ -148,7 +162,7 @@
   }
 
   /* Landscape orientation adjustments */
-  @media (max-width: 768px) and (max-height: 500px) and (orientation: landscape) {
+  @media (max-width: 600px) and (max-height: 500px) and (orientation: landscape) {
     .mobile-menu {
       .mobile-links {
         padding-top: 70px; /* Less top padding in landscape */

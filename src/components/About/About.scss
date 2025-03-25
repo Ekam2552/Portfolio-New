@@ -217,8 +217,43 @@
     }
   }
 
+  /* Tablet and landscape mobile breakpoint */
+  @media (max-width: 1100px) {
+    flex-direction: row; /* Keep side by side layout */
+    padding: 0 30px;
+
+    .about-content {
+      h2 {
+        font-size: 32px; /* Match global typography */
+      }
+
+      p {
+        font-size: 15px; /* Match global typography */
+        margin-top: 15px !important;
+        width: 400px;
+      }
+
+      /* Adjust scroll indicator position for tablets */
+      .scroll-indicator {
+        bottom: 25px;
+      }
+    }
+
+    .about-images {
+      max-width: 250px;
+    }
+  }
+
+  @media (max-width: 1100px) and (min-width: 601px) and (max-height: 450px) {
+    .about-content {
+      .scroll-indicator {
+        display: none;
+      }
+    }
+  }
+
   /* Responsive adjustments */
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     height: auto;
     min-height: calc(100vh - var(--navbar-height, 80px));

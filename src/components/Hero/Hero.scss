@@ -114,6 +114,26 @@
     }
   }
 
+  /* Tablet and landscape mobile breakpoint */
+  @media screen and (max-width: 1100px) {
+    .hero-content {
+      padding: 0 40px;
+
+      .home-title {
+        max-width: 580px;
+
+        h1 {
+          font-size: 42px; /* Match global typography */
+        }
+
+        .paragraph {
+          margin-top: 30px !important;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
   /* Media query for tablets and smaller desktops */
   @media screen and (max-width: 1400px) {
     .hero-content {
@@ -140,7 +160,7 @@
   }
 
   /* Media query for mobile devices */
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 600px) {
     /* Adjust height to account for smaller navbar on mobile */
 
     .hero-content {
@@ -193,7 +213,7 @@
   @supports (-webkit-touch-callout: none) {
     height: calc(100% - var(--navbar-height, 80px) - 90px);
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 600px) {
       height: calc(100% - var(--navbar-height-mobile, 70px) - 40px);
     }
   }

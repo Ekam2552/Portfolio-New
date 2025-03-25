@@ -88,7 +88,7 @@
 
     &::before,
     &::after {
-      content: '';
+      content: "";
       display: inline-block;
       width: 40px;
       height: 1px;
@@ -118,8 +118,48 @@
     display: inline-block;
   }
 
+  /* Tablet and landscape mobile breakpoint */
+  @media (max-width: 1100px) {
+    .loader-content {
+      max-width: 85%;
+      gap: 1.2rem;
+    }
+
+    .title-line {
+      font-size: 3rem;
+      letter-spacing: 7px;
+    }
+
+    .name-line {
+      font-size: 4.2rem;
+      letter-spacing: 3.5px;
+    }
+
+    .role-line {
+      font-size: 1.3rem;
+      letter-spacing: 5px;
+    }
+
+    .tagline-line {
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      margin-top: 1.8rem;
+
+      &::before,
+      &::after {
+        width: 35px;
+        margin: 0 12px;
+      }
+    }
+
+    .percentage-line {
+      font-size: 2.8rem;
+      margin-top: 1.8rem;
+    }
+  }
+
   /* Media query for smaller screens */
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .title-line {
       font-size: 2rem;
       letter-spacing: 6px;
