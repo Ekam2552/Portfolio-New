@@ -1,10 +1,6 @@
 .about {
   width: 100%;
-  /* 
-  * Calculate the height by taking 100vh and subtracting the navbar height
-  * This ensures that Navbar + Hero = 100vh
-  */
-  height: calc(100vh - var(--navbar-height, 80px) - 90px);
+  height: var(--section-height);
   overflow: hidden;
   display: flex;
   padding: 0 var(--page-padding, 20px);
@@ -62,65 +58,6 @@
       &.paragraph {
         margin-top: 20px !important;
       }
-    }
-
-    /* Scroll indicator styling */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 30px;
-      left: 0;
-      opacity: 0; /* Start hidden, will be animated by GSAP */
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      user-select: none;
-      will-change: opacity, transform; /* Optimize for animations */
-
-      .scroll-text {
-        font-size: 0.85rem;
-        color: var(--text-secondary, #dddddd);
-        margin-bottom: 10px;
-        opacity: 0.8;
-        font-weight: 300;
-      }
-
-      .scroll-arrows {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 4px;
-
-        .arrow {
-          color: var(--text-secondary, #dddddd);
-          font-size: 1.2rem;
-          line-height: 1.2;
-          margin: 0 5px;
-          width: 20px;
-          height: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &.up {
-            animation: bounce-up 2s infinite;
-          }
-
-          &.down {
-            animation: bounce-down 2s infinite;
-            animation-delay: 0.5s;
-          }
-        }
-      }
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
-    /* Ensure consistent spacing with animation wrappers */
-    h2 + .text-reveal-wrapper,
-    .text-reveal-wrapper + .text-reveal-wrapper {
-      margin-top: 20px;
     }
 
     /* Animation related classes */
@@ -183,40 +120,6 @@
     }
   }
 
-  /* Bounce down animation for scroll indicator */
-  @keyframes bounce-down {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(6px);
-    }
-    60% {
-      transform: translateY(3px);
-    }
-  }
-
-  /* Bounce up animation for scroll indicator */
-  @keyframes bounce-up {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-6px);
-    }
-    60% {
-      transform: translateY(-3px);
-    }
-  }
-
   /* Tablet and landscape mobile breakpoint */
   @media (max-width: 1100px) {
     flex-direction: row; /* Keep side by side layout */
@@ -226,16 +129,8 @@
       h2 {
         font-size: 32px; /* Match global typography */
       }
-
       p {
-        font-size: 15px; /* Match global typography */
-        margin-top: 15px !important;
-        width: 400px;
-      }
-
-      /* Adjust scroll indicator position for tablets */
-      .scroll-indicator {
-        bottom: 25px;
+        max-width: 350px;
       }
     }
 
@@ -246,6 +141,13 @@
 
   @media (max-width: 1100px) and (min-width: 601px) and (max-height: 450px) {
     .about-content {
+      h2 {
+        font-size: 1.5rem;
+      }
+      p {
+        font-size: 0.8rem;
+        width: 300px;
+      }
       .scroll-indicator {
         display: none;
       }
@@ -275,30 +177,6 @@
         font-size: 1rem;
         margin-top: 15px !important;
         min-height: 180px;
-      }
-
-      /* Fixed scroll indicator in mobile */
-      .scroll-indicator {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        align-items: center;
-        z-index: 10;
-
-        .scroll-arrows {
-          flex-direction: row;
-          padding: 4px;
-
-          .arrow {
-            margin: 0 5px;
-
-            &.up,
-            &.down {
-              transform: rotate(0);
-            }
-          }
-        }
       }
     }
 
@@ -346,7 +224,7 @@
       }
 
       p {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
       }
     }
   }

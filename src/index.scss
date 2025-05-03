@@ -142,6 +142,8 @@ section {
   /* Layout variables */
   --navbar-height: 80px;
   --navbar-height-mobile: 70px;
+
+  --section-height: calc(100vh - var(--navbar-height, 80px) - 90px);
 }
 
 html {

@@ -1,0 +1,167 @@
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  opacity: 0; /* Start hidden, will be animated by GSAP */
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  will-change: opacity, transform; /* Optimize for animations */
+  z-index: 5; /* Lower z-index to prevent overlapping navbar overlay */
+
+  /* Position variants */
+  &.position-left {
+    left: 0;
+    align-items: flex-start;
+  }
+
+  &.position-center {
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+
+  &.position-right {
+    right: 0;
+    left: auto;
+    align-items: flex-end;
+  }
+
+  .scroll-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary, #dddddd);
+    margin-bottom: 10px;
+    opacity: 0.8;
+    font-weight: 300;
+  }
+
+  .scroll-arrows {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+
+    .arrow {
+      color: var(--text-secondary, #dddddd);
+      font-size: 1.2rem;
+      line-height: 1.2;
+      margin: 0 5px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.up {
+        animation: bounce-up 2s infinite;
+      }
+
+      &.down {
+        animation: bounce-down 2s infinite;
+        animation-delay: 0.5s;
+      }
+
+      &.left {
+        animation: bounce-left 2s infinite;
+      }
+
+      &.right {
+        animation: bounce-right 2s infinite;
+        animation-delay: 0.5s;
+      }
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/* Bounce down animation for scroll indicator */
+@keyframes bounce-down {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(6px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
+/* Bounce up animation for scroll indicator */
+@keyframes bounce-up {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Bounce right animation for scroll indicator */
+@keyframes bounce-right {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(3px);
+  }
+}
+
+/* Bounce left animation for scroll indicator */
+@keyframes bounce-left {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-6px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+}
+
+/* Tablet and landscape mobile breakpoint */
+@media (max-width: 1050px) {
+  .scroll-indicator {
+    bottom: 25px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 15px;
+
+    &.position-left,
+    &.position-right {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      align-items: center;
+    }
+  }
+}

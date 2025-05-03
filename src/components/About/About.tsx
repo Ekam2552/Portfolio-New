@@ -8,6 +8,7 @@ import {
   setupCurtainForHiddenElements,
   applyCurtainRevealToElement,
 } from "../../utils/animations/textRevealAnimations";
+import ScrollIndicator from "../common/ScrollIndicator";
 
 // Register the GSAP plugin
 gsap.registerPlugin(useGSAP);
@@ -20,7 +21,6 @@ const About = () => {
   const paragraphRef = useRef<HTMLParagraphElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const imageContainerRef = useRef<HTMLDivElement>(null);
-  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   // Image cycling state
   const [currentImageIndex, setCurrentImageIndex] = useState(2); // Start with the default image (index 2)
@@ -367,23 +367,8 @@ const About = () => {
           });
         });
 
-        // Add scroll indicator animation after text reveal
-        if (scrollIndicatorRef.current) {
-          // Initially hide scroll indicator
-          gsap.set(scrollIndicatorRef.current, {
-            opacity: 0,
-            y: 20,
-          });
-
-          // Animate in after the text reveals
-          gsap.to(scrollIndicatorRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power2.out",
-            delay: textElements.length * timing.DEFAULT_STAGGER + 0.5, // Delay until after text reveal
-          });
-        }
+        // Note: We no longer need to animate the scroll indicator here
+        // as that's now handled by the ScrollIndicator component
       }, timing.POST_LOADER_DELAY + 200); // Add a bit more delay after navbar animations
 
       return () => {
@@ -403,13 +388,13 @@ const About = () => {
         <p ref={paragraphRef} className="paragraph reveal-text">
           {aboutContent[contentIndex].description}
         </p>
-        <div className="scroll-indicator" ref={scrollIndicatorRef}>
-          <div className="scroll-text">Scroll to explore</div>
-          <div className="scroll-arrows">
-            <div className="arrow up">↑</div>
-            <div className="arrow down">↓</div>
-          </div>
-        </div>
+
+        {/* Use the new ScrollIndicator component */}
+        <ScrollIndicator
+          position="left"
+          delay={timing.POST_LOADER_DELAY / 1000 + 0.7}
+          direction="vertical"
+        />
       </div>
       <div className="about-images" ref={imageContainerRef}>
         <img

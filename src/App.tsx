@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Loader from "./components/Loader/Loader";
 import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
+import Work from "./components/Work/Work";
 // Animation Context
 import { AnimationProvider } from "./context/AnimationContext";
 
@@ -56,6 +57,7 @@ function App() {
         {/* Render sections based on active section */}
         {activeSection === "Home" && <Hero />}
         {activeSection === "About" && <About />}
+        {activeSection === "Projects" && <Work />}
         {/* Other sections will be added later */}
       </div>
     </AnimationProvider>

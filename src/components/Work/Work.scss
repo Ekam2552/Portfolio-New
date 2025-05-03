@@ -1,0 +1,125 @@
+.work {
+  width: 100%;
+  height: var(--section-height);
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  position: relative; /* Ensure proper positioning context */
+
+  /* Specific positioning for the ScrollIndicator in mobile view */
+  .mobile-indicator {
+    bottom: 20px !important; /* Override the default positioning */
+    position: absolute !important; /* Ensure absolute positioning */
+  }
+
+  .cards-holder {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 50px 40px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 20px; /* Space for scrollbar */
+
+    /* Hide scrollbar but keep functionality */
+    scrollbar-width: thin;
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--secondary-text-and-subheadings);
+      border-radius: 3px;
+    }
+  }
+
+  /* Tablet and landscape mobile breakpoint */
+  @media (max-width: 1100px) {
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: var(--section-height);
+    overflow: hidden;
+    padding-bottom: 10px; /* Add some padding at the bottom of the container */
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    .cards-holder {
+      flex-direction: column;
+      gap: 30px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1;
+      padding-right: 20px; /* Add space for vertical scrollbar */
+      margin-bottom: 80px; /* Increased space for scroll indicator */
+      padding-bottom: 20px; /* Additional padding to ensure last card is fully visible */
+      /* Ensure this doesn't grow too large and push indicator off-screen */
+      max-height: calc(var(--section-height) - 180px);
+
+      /* Vertical scrollbar styling */
+      &::-webkit-scrollbar {
+        width: 6px;
+        height: auto;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: var(--secondary-text-and-subheadings);
+        border-radius: 3px;
+      }
+    }
+  }
+
+  /* Specific adjustments for landscape orientation on tablets */
+  @media (max-width: 1100px) and (min-width: 601px) and (max-height: 450px) {
+    gap: 20px;
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .cards-holder {
+      margin-bottom: 0; /* Remove bottom margin in landscape */
+      max-height: calc(100vh - 100px); /* Adjust height for landscape */
+      padding-bottom: 0;
+    }
+
+    /* Hide scroll indicator in landscape mode */
+    .mobile-indicator {
+      display: none !important;
+    }
+  }
+
+  /* Specific adjustments for landscape orientation on mobile */
+  @media (max-width: 600px) and (max-height: 450px) {
+    gap: 15px;
+
+    h1 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .cards-holder {
+      gap: 15px;
+      margin-bottom: 0;
+      max-height: calc(100vh - 80px);
+    }
+  }
+
+  /* Regular responsive adjustments for mobile */
+  @media (max-width: 600px) {
+    gap: 30px;
+
+    .cards-holder {
+      gap: 30px;
+      padding-right: 10px;
+      margin-bottom: 70px; /* Adjusted for mobile */
+      max-height: calc(var(--section-height) - 160px); /* Adjusted for mobile */
+    }
+
+    .mobile-indicator {
+      bottom: 15px !important; /* Adjusted for mobile */
+    }
+  }
+}
