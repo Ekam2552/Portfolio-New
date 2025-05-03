@@ -27,7 +27,7 @@ const workData: WorkData[] = [
     ],
     image: "",
     video: Project1Video,
-    link: "www.google.com",
+    link: "https://learning-app-olive-seven.vercel.app/",
   },
   {
     id: 2,
