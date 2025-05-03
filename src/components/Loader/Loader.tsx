@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import './Loader.scss';
-import { useAnimationContext } from '../../context/AnimationContext';
+import { useRef, useState, useEffect } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import "./Loader.scss";
+import { useAnimationContext } from "../../context/useAnimationContext";
 import {
   setupCurtainForHiddenElements,
   applyCurtainRevealToElement,
-} from '../../utils/animations/textRevealAnimations';
+} from "../../utils/animations/textRevealAnimations";
 
 interface LoaderProps {
   duration?: number; // Duration in seconds
@@ -40,7 +40,7 @@ const Loader: React.FC<LoaderProps> = ({
 
   // Effect to mark component as mounted
   useEffect(() => {
-    console.log('Loader mounted');
+    console.log("Loader mounted");
     setIsMounted(true);
 
     // Simple approach: hide all elements at first
@@ -57,7 +57,7 @@ const Loader: React.FC<LoaderProps> = ({
     });
 
     return () => {
-      console.log('Loader unmounted');
+      console.log("Loader unmounted");
       setIsMounted(false);
     };
   }, []);
@@ -76,7 +76,7 @@ const Loader: React.FC<LoaderProps> = ({
       {},
       {
         duration: 3, // Fixed duration to ensure it reaches 100%
-        ease: 'slow(0.3, 0.7, false)', // Custom ease with acceleration and deceleration
+        ease: "slow(0.3, 0.7, false)", // Custom ease with acceleration and deceleration
         onUpdate: function () {
           // Calculate progress (0-1) and convert to percentage (0-100)
           const progress = counterTl.progress();
@@ -96,7 +96,7 @@ const Loader: React.FC<LoaderProps> = ({
     () => {
       if (!loaderRef.current || !contentRef.current || !isMounted) return;
 
-      console.log('Setting up loader animations');
+      console.log("Setting up loader animations");
 
       // Make sure the background is visible
       gsap.set(loaderRef.current, { autoAlpha: 1 });
@@ -113,7 +113,7 @@ const Loader: React.FC<LoaderProps> = ({
 
       allElements.forEach((el) => {
         if (el) {
-          el.classList.add('reveal-text');
+          el.classList.add("reveal-text");
           // Make sure the element itself is visible (the curtain will cover it)
           gsap.set(el, { autoAlpha: 1 });
         }
@@ -122,8 +122,8 @@ const Loader: React.FC<LoaderProps> = ({
       // Set up curtains for all text elements
       if (contentRef.current) {
         setupCurtainForHiddenElements(contentRef.current, {
-          textSelector: '.reveal-text',
-          curtainColor: 'var(--primary-background)',
+          textSelector: ".reveal-text",
+          curtainColor: "var(--primary-background)",
         });
       }
 
@@ -134,16 +134,14 @@ const Loader: React.FC<LoaderProps> = ({
       ) => {
         if (!element) return null;
 
-        // Apply the curtain reveal animation
-        const anim = applyCurtainRevealToElement(element, {
-          direction: 'top',
+        // Apply the curtain reveal animation - returns a cleanup function, not a Tween
+        return applyCurtainRevealToElement(element, {
+          direction: "top",
           duration: 1.2,
-          ease: 'power3.out',
+          ease: "power3.out",
           delay: delay,
-          curtainColor: 'var(--primary-background)',
+          curtainColor: "var(--primary-background)",
         });
-
-        return anim;
       };
 
       // Create a sequence of curtain reveals with proper timing
@@ -153,7 +151,7 @@ const Loader: React.FC<LoaderProps> = ({
       const taglineAnim = revealWithCurtain(taglineRef.current, 2.0);
 
       // Reveal percentage with a longer delay
-      let percentageAnim: gsap.core.Tween | null = null;
+      let percentageAnim: (() => void) | null = null;
       setTimeout(() => {
         if (percentageRef.current) {
           percentageAnim = revealWithCurtain(percentageRef.current, 0);
@@ -167,7 +165,7 @@ const Loader: React.FC<LoaderProps> = ({
       const mainTl = gsap.timeline({
         delay: minimumLoaderDuration - 1.5,
         onComplete: () => {
-          console.log('Loader animation complete');
+          console.log("Loader animation complete");
           setAnimationComplete(true);
           setLoaderComplete(true);
           if (onComplete) onComplete();
@@ -180,7 +178,7 @@ const Loader: React.FC<LoaderProps> = ({
         y: -20,
         duration: 0.8,
         stagger: 0.1,
-        ease: 'power2.in',
+        ease: "power2.in",
       });
 
       // Fade out the overlay
@@ -189,19 +187,20 @@ const Loader: React.FC<LoaderProps> = ({
         {
           opacity: 0,
           duration: 1,
-          ease: 'power2.inOut',
+          ease: "power2.inOut",
         },
-        '+=0.3'
+        "+=0.3"
       );
 
       // Return cleanup function
       return () => {
-        console.log('Cleaning up loader animations');
-        if (titleAnim) titleAnim.kill();
-        if (nameAnim) nameAnim.kill();
-        if (roleAnim) roleAnim.kill();
-        if (taglineAnim) taglineAnim.kill();
-        if (percentageAnim) percentageAnim.kill();
+        console.log("Cleaning up loader animations");
+        // Call the cleanup functions instead of using kill()
+        if (titleAnim) titleAnim();
+        if (nameAnim) nameAnim();
+        if (roleAnim) roleAnim();
+        if (taglineAnim) taglineAnim();
+        if (percentageAnim) percentageAnim();
         mainTl.kill();
       };
     },
@@ -211,11 +210,11 @@ const Loader: React.FC<LoaderProps> = ({
   // Hide the loader from the DOM after fade out
   useEffect(() => {
     if (animationComplete && loaderRef.current) {
-      console.log('Removing loader from DOM');
+      console.log("Removing loader from DOM");
       // Short timeout to ensure animation is complete
       const timeout = setTimeout(() => {
         if (loaderRef.current) {
-          loaderRef.current.style.display = 'none';
+          loaderRef.current.style.display = "none";
         }
       }, 1000);
 

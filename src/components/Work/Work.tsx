@@ -3,7 +3,7 @@ import ScrollIndicator from "../common/ScrollIndicator";
 import { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useAnimationContext } from "../../context/AnimationContext";
+import { useAnimationContext } from "../../context/useAnimationContext";
 import { applyCurtainRevealToElement } from "../../utils/animations/textRevealAnimations";
 
 // WorkCard component and data

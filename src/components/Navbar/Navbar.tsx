@@ -12,7 +12,7 @@ import {
 } from "../../utils/animations/textRevealAnimations";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useAnimationContext } from "../../context/AnimationContext";
+import { useAnimationContext } from "../../context/useAnimationContext";
 import { SectionType } from "../../App";
 
 // Register the GSAP plugin

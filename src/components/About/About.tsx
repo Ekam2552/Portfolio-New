@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import "./About.scss";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useAnimationContext } from "../../context/useAnimationContext";
 import { aboutContent, aboutImages } from "./AboutData";
-import { useAnimationContext } from "../../context/AnimationContext";
 import {
   setupCurtainForHiddenElements,
   applyCurtainRevealToElement,

@@ -1,8 +1,8 @@
-import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { useGSAP } from '@gsap/react';
-import './HamburgerButton.scss';
-import { useAnimationContext } from '../../context/AnimationContext';
+import React, { useRef, useEffect } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import "./HamburgerButton.scss";
+import { useAnimationContext } from "../../context/useAnimationContext";
 
 interface HamburgerButtonProps {
   isOpen: boolean;
@@ -17,7 +17,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
   const topLineRef = useRef<HTMLDivElement>(null);
   const middleLineRef = useRef<HTMLDivElement>(null);
   const bottomLineRef = useRef<HTMLDivElement>(null);
-  
+
   // Use the animation context to know when to start animations
   const { loaderComplete, timing } = useAnimationContext();
 
@@ -36,7 +36,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
     gsap.set(
       [topLineRef.current, middleLineRef.current, bottomLineRef.current],
       {
-        width: '0%',
+        width: "0%",
         opacity: 1,
         x: 0,
         y: 0,
@@ -50,27 +50,27 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
 
       // Make lines appear without using curtain effect
       tl.to(topLineRef.current, {
-        width: '100%',
+        width: "100%",
         duration: 0.7,
-        ease: 'power2.out',
+        ease: "power2.out",
       })
         .to(
           middleLineRef.current,
           {
-            width: '100%',
+            width: "100%",
             duration: 0.7,
-            ease: 'power2.out',
+            ease: "power2.out",
           },
-          '-=0.4'
+          "-=0.4"
         )
         .to(
           bottomLineRef.current,
           {
-            width: '100%',
+            width: "100%",
             duration: 0.7,
-            ease: 'power2.out',
+            ease: "power2.out",
           },
-          '-=0.4'
+          "-=0.4"
         );
     }, timing.POST_LOADER_DELAY);
 
@@ -92,49 +92,49 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
       if (isOpen) {
         // Animate to X (close icon)
         gsap.to(topLineRef.current, {
-          width: '24px', // Ensure full width for visibility
+          width: "24px", // Ensure full width for visibility
           y: 5,
           rotation: 45,
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
 
         gsap.to(middleLineRef.current, {
           opacity: 0,
           duration: 0.2,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
 
         gsap.to(bottomLineRef.current, {
-          width: '24px', // Ensure full width for visibility
+          width: "24px", // Ensure full width for visibility
           y: -3,
           rotation: -45,
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
       } else {
         // Animate to hamburger icon
         gsap.to(topLineRef.current, {
-          width: '24px', // Ensure full width
+          width: "24px", // Ensure full width
           y: 0,
           rotation: 0,
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
 
         gsap.to(middleLineRef.current, {
-          width: '24px', // Ensure full width
+          width: "24px", // Ensure full width
           opacity: 1,
           duration: 0.2,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
 
         gsap.to(bottomLineRef.current, {
-          width: '24px', // Ensure full width
+          width: "24px", // Ensure full width
           y: 0,
           rotation: 0,
           duration: 0.3,
-          ease: 'power2.out',
+          ease: "power2.out",
         });
       }
     },
@@ -146,7 +146,7 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({
       ref={buttonRef}
       className="hamburger-button"
       onClick={onClick}
-      aria-label={isOpen ? 'Close menu' : 'Open menu'}
+      aria-label={isOpen ? "Close menu" : "Open menu"}
       aria-expanded={isOpen}
     >
       <div ref={topLineRef} className="hamburger-line"></div>

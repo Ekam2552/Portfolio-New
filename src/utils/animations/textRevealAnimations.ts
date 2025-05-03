@@ -295,7 +295,7 @@ export const setupCurtainForHiddenElements = (
     ) as HTMLElement;
     if (curtain) {
       // Create a context for consistent cleanup
-      const ctx = gsap.context(() => {
+      gsap.context(() => {
         // Reset any existing transforms to ensure proper starting state
         curtain.style.transform = "";
         gsap.set(curtain, { x: 0, y: 0, clearProps: "transformOrigin" });

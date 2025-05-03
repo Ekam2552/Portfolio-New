@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import "./Hero.scss";
-import { useAnimationContext } from "../../context/AnimationContext";
+import { useAnimationContext } from "../../context/useAnimationContext";
 import {
   setupCurtainForHiddenElements,
   applyCurtainRevealToElement,
