@@ -67,6 +67,13 @@ const About = () => {
   useEffect(() => {
     if (!contentRef.current || !loaderComplete) return;
 
+    // Force reset scrolling state after a certain time as a safety measure
+    const safetyReset = () => {
+      if (isScrolling) {
+        setIsScrolling(false);
+      }
+    };
+
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
 
@@ -90,11 +97,20 @@ const About = () => {
 
       // Handle content cycling animation
       updateContent(direction, newIndex);
+
+      // Set a safety timeout to reset scrolling state if animation fails
+      setTimeout(safetyReset, 1500);
     };
 
     // Touch event handlers for mobile
     const handleTouchStart = (e: TouchEvent) => {
+      // Store the initial touch position
       setTouchStartY(e.touches[0].clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      // Prevent default to stop page scrolling
+      e.preventDefault();
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -125,6 +141,9 @@ const About = () => {
 
       // Reset touch start position
       setTouchStartY(null);
+
+      // Set a safety timeout to reset scrolling state if animation fails
+      setTimeout(safetyReset, 1500);
     };
 
     // Function to handle content updating animation
@@ -174,13 +193,21 @@ const About = () => {
 
     const contentElement = contentRef.current;
     contentElement.addEventListener("wheel", handleWheel, { passive: false });
-    contentElement.addEventListener("touchstart", handleTouchStart);
-    contentElement.addEventListener("touchend", handleTouchEnd);
+    contentElement.addEventListener("touchstart", handleTouchStart, {
+      passive: false,
+    });
+    contentElement.addEventListener("touchmove", handleTouchMove, {
+      passive: false,
+    });
+    contentElement.addEventListener("touchend", handleTouchEnd, {
+      passive: false,
+    });
 
     return () => {
       if (contentElement) {
         contentElement.removeEventListener("wheel", handleWheel);
         contentElement.removeEventListener("touchstart", handleTouchStart);
+        contentElement.removeEventListener("touchmove", handleTouchMove);
         contentElement.removeEventListener("touchend", handleTouchEnd);
       }
       if (scrollTimeoutRef.current) {
