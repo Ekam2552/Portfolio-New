@@ -2,11 +2,11 @@ import Project1Video from "../../assets/Project1.mp4";
 
 interface WorkData {
   id: number;
-  title?: string;
-  techStack?: string[];
-  image?: string;
-  video?: string;
-  link?: string;
+  title: string;
+  techStack: string[];
+  image: string | null;
+  video: string | null;
+  link: string | null;
 }
 
 const workData: WorkData[] = [
@@ -25,24 +25,25 @@ const workData: WorkData[] = [
       "Git",
       "GitHub",
     ],
-    image: "",
+    image: null,
     video: Project1Video,
     link: "https://learning-app-olive-seven.vercel.app/",
   },
   {
     id: 2,
-    title: "",
+    title: "Coming Soon",
     techStack: [],
-    image: "",
-    video: "",
-    link: "",
+    image: null,
+    video: null,
+    link: null,
   },
   {
     id: 3,
-    title: "",
+    title: "Coming Soon",
     techStack: [],
-    image: "",
-    video: "",
+    image: null,
+    video: null,
+    link: null,
   },
 ];
 

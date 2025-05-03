@@ -31,6 +31,7 @@ const About = () => {
   const [contentIndex, setContentIndex] = useState(0); // Start with index 0 from aboutContent
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeoutRef = useRef<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   // Get the loader completion state from context
   const { loaderComplete, timing } = useAnimationContext();
@@ -88,6 +89,46 @@ const About = () => {
       }
 
       // Handle content cycling animation
+      updateContent(direction, newIndex);
+    };
+
+    // Touch event handlers for mobile
+    const handleTouchStart = (e: TouchEvent) => {
+      setTouchStartY(e.touches[0].clientY);
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchStartY === null || isScrolling) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const touchDiff = touchStartY - touchEndY;
+
+      // Only trigger if the swipe is significant enough (prevents accidental triggers)
+      if (Math.abs(touchDiff) < 30) return;
+
+      setIsScrolling(true);
+
+      // Determine swipe direction (negative = swipe down, positive = swipe up)
+      const direction = touchDiff > 0 ? "down" : "up";
+
+      // Calculate next content index
+      let newIndex = contentIndex;
+      if (direction === "down") {
+        newIndex = (contentIndex + 1) % aboutContent.length;
+      } else {
+        newIndex =
+          contentIndex === 0 ? aboutContent.length - 1 : contentIndex - 1;
+      }
+
+      // Handle content cycling animation
+      updateContent(direction, newIndex);
+
+      // Reset touch start position
+      setTouchStartY(null);
+    };
+
+    // Function to handle content updating animation
+    const updateContent = (direction: "up" | "down", newIndex: number) => {
       if (titleRef.current && paragraphRef.current) {
         const tl = gsap.timeline({
           defaults: { ease: "power2.inOut" },
@@ -133,16 +174,20 @@ const About = () => {
 
     const contentElement = contentRef.current;
     contentElement.addEventListener("wheel", handleWheel, { passive: false });
+    contentElement.addEventListener("touchstart", handleTouchStart);
+    contentElement.addEventListener("touchend", handleTouchEnd);
 
     return () => {
       if (contentElement) {
         contentElement.removeEventListener("wheel", handleWheel);
+        contentElement.removeEventListener("touchstart", handleTouchStart);
+        contentElement.removeEventListener("touchend", handleTouchEnd);
       }
       if (scrollTimeoutRef.current) {
         window.clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, [contentRef, contentIndex, isScrolling, loaderComplete]);
+  }, [contentRef, contentIndex, isScrolling, loaderComplete, touchStartY]);
 
   // Create next image element for smoother transitions
   useEffect(() => {

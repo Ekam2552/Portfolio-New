@@ -61,16 +61,6 @@ const WorkCard = ({ title, techStack, video, link, id }: WorkCardProps) => {
       // Better tablet detection that includes iPad Pro in landscape (1366x1024)
       const isSmallScreen = window.innerWidth <= 1100;
       const isTablet = isTouchDevice();
-
-      // Log detection for debugging
-      console.log("Device detection:", {
-        isSmallScreen,
-        isTablet,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        touchPoints: navigator.maxTouchPoints,
-      });
-
       setIsMobileOrTablet(isSmallScreen || isTablet);
     };
 
@@ -231,7 +221,7 @@ const WorkCard = ({ title, techStack, video, link, id }: WorkCardProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <video src={video} autoPlay muted loop />
+      {video && <video src={video} autoPlay muted loop />}
       <div ref={overlayRef} className="frosted-overlay" />
       <div className="card-details" ref={detailsRef}>
         <h4>{title}</h4>

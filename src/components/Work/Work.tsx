@@ -166,8 +166,8 @@ const Work = () => {
           <WorkCard
             key={work.id}
             id={work.id.toString()}
-            title={work.title || ""}
-            techStack={work.techStack || []}
+            title={work.title}
+            techStack={work.techStack}
             image={work.image || ""}
             video={work.video || ""}
             link={work.link || ""}

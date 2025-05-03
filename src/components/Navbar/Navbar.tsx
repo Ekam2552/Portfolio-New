@@ -288,14 +288,6 @@ const Navbar = ({ activeSection, onSectionChange }: NavbarProps) => {
     { dependencies: [menuOpen], scope: navbarRef }
   );
 
-  // Log when hamburger state changes to verify it's working
-  useGSAP(
-    () => {
-      console.log("Menu state:", menuOpen ? "open" : "closed");
-    },
-    { dependencies: [menuOpen], scope: navbarRef }
-  );
-
   return (
     <div className="navbar" ref={navbarRef}>
       {/* The Overlay component is positioned absolutely and will ignore auto layout */}

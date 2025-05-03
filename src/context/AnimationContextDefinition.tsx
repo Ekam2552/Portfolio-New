@@ -1,15 +1,15 @@
-import { createContext } from "react";
+import React from "react";
 import { AnimationTiming } from "./AnimationTimingConfig";
 
-// Define the context type
-export type AnimationContextType = {
+// Define the type for the context
+export interface AnimationContextType {
   loaderComplete: boolean;
-  setLoaderComplete: (complete: boolean) => void;
+  setLoaderComplete: React.Dispatch<React.SetStateAction<boolean>>;
   timing: typeof AnimationTiming;
-};
+}
 
-// Create context with default values
-export const AnimationContext = createContext<AnimationContextType>({
+// Create the context with a default value
+export const AnimationContext = React.createContext<AnimationContextType>({
   loaderComplete: false,
   setLoaderComplete: () => {},
   timing: AnimationTiming,

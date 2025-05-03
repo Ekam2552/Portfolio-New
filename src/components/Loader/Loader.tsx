@@ -40,7 +40,6 @@ const Loader: React.FC<LoaderProps> = ({
 
   // Effect to mark component as mounted
   useEffect(() => {
-    console.log("Loader mounted");
     setIsMounted(true);
 
     // Simple approach: hide all elements at first
@@ -57,7 +56,6 @@ const Loader: React.FC<LoaderProps> = ({
     });
 
     return () => {
-      console.log("Loader unmounted");
       setIsMounted(false);
     };
   }, []);
@@ -95,8 +93,6 @@ const Loader: React.FC<LoaderProps> = ({
   useGSAP(
     () => {
       if (!loaderRef.current || !contentRef.current || !isMounted) return;
-
-      console.log("Setting up loader animations");
 
       // Make sure the background is visible
       gsap.set(loaderRef.current, { autoAlpha: 1 });
@@ -165,7 +161,6 @@ const Loader: React.FC<LoaderProps> = ({
       const mainTl = gsap.timeline({
         delay: minimumLoaderDuration - 1.5,
         onComplete: () => {
-          console.log("Loader animation complete");
           setAnimationComplete(true);
           setLoaderComplete(true);
           if (onComplete) onComplete();
@@ -194,7 +189,6 @@ const Loader: React.FC<LoaderProps> = ({
 
       // Return cleanup function
       return () => {
-        console.log("Cleaning up loader animations");
         // Call the cleanup functions instead of using kill()
         if (titleAnim) titleAnim();
         if (nameAnim) nameAnim();
@@ -210,7 +204,6 @@ const Loader: React.FC<LoaderProps> = ({
   // Hide the loader from the DOM after fade out
   useEffect(() => {
     if (animationComplete && loaderRef.current) {
-      console.log("Removing loader from DOM");
       // Short timeout to ensure animation is complete
       const timeout = setTimeout(() => {
         if (loaderRef.current) {
