@@ -1,0 +1,115 @@
+.contact {
+  min-height: var(--section-height);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 0;
+
+  h1 {
+    max-width: 680px;
+    overflow: hidden;
+  }
+
+  form {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .form-submit-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+
+      .status-message {
+        padding: 15px;
+        border-radius: 4px;
+        font-weight: var(--weight-medium);
+
+        &.success {
+          background-color: rgba(39, 174, 96, 0.1);
+          border: 1px solid #27ae60;
+          color: #27ae60;
+        }
+
+        &.error {
+          background-color: rgba(235, 87, 87, 0.1);
+          border: 1px solid #eb5757;
+          color: #eb5757;
+        }
+      }
+    }
+
+    button[type="submit"] {
+      width: fit-content;
+      padding: 15px 30px;
+      border-radius: 4px;
+      border: none;
+      background-color: var(--optional-pop-accent-for-links-and-buttons);
+      color: var(--primary-white-text);
+      font-family: var(--font-secondary);
+      font-weight: var(--weight-medium);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: var(--secondary-text-and-subheadings);
+        color: var(--primary-background);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  /* Tablet and landscape mobile breakpoint */
+  @media screen and (max-width: 1100px) {
+    gap: 40px;
+
+    h1 {
+      max-width: 600px;
+    }
+
+    form {
+      gap: 18px;
+
+      .form-submit-container {
+        margin-top: 15px;
+      }
+
+      button[type="submit"] {
+        padding: 12px 25px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  /* Mobile breakpoint */
+  @media screen and (max-width: 600px) {
+    gap: 30px;
+
+    h1 {
+      max-width: 100%;
+    }
+
+    form {
+      gap: 15px;
+
+      .form-submit-container {
+        width: 100%;
+
+        button[type="submit"] {
+          width: 100%;
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

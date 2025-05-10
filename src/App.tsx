@@ -7,6 +7,7 @@ import Loader from "./components/Loader/Loader";
 import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
 import Work from "./components/Work/Work";
+import Contact from "./components/Contact/Contact";
 // Animation Context
 import { AnimationProvider } from "./context/AnimationContext";
 
@@ -58,6 +59,7 @@ function App() {
         {activeSection === "Home" && <Hero />}
         {activeSection === "About" && <About />}
         {activeSection === "Projects" && <Work />}
+        {activeSection === "Contact" && <Contact />}
         {/* Other sections will be added later */}
       </div>
     </AnimationProvider>

@@ -3,7 +3,7 @@
   height: var(--section-height);
   overflow: hidden;
   display: flex;
-  padding: 0 var(--page-padding, 20px);
+  padding: 0;
   position: relative;
 
   /* Hide scrollbars while still allowing wheel events */
@@ -22,7 +22,7 @@
     z-index: 1;
     position: relative;
     will-change: transform, opacity;
-
+    overflow: hidden;
     /* Make content area respond to wheel events */
     touch-action: none; /* Prevents default touch behaviors */
 
@@ -33,6 +33,7 @@
       margin-bottom: 0;
       will-change: transform, opacity;
       position: relative;
+      overflow: hidden;
     }
 
     p {
@@ -44,6 +45,7 @@
       color: var(--text-secondary, #dddddd);
       will-change: transform, opacity;
       position: relative;
+      overflow: hidden;
     }
 
     /* Style for cloned content during transitions */
@@ -54,9 +56,11 @@
       width: 100%;
       pointer-events: none;
       z-index: 5;
-
+      overflow: hidden;
+      
       &.paragraph {
         margin-top: 20px !important;
+        overflow: hidden;
       }
     }
 
@@ -74,6 +78,7 @@
       display: inline-block;
       vertical-align: top;
       z-index: 10;
+      overflow: hidden;
     }
   }
 
@@ -102,21 +107,25 @@
       height: auto;
       object-fit: contain;
       transition: opacity 0.7s ease-in-out;
+      overflow: hidden;
     }
 
     .current-image {
       z-index: 2;
       will-change: opacity;
+      overflow: hidden;
     }
 
     .next-image {
       z-index: 1;
       opacity: 0;
       will-change: opacity;
+      overflow: hidden;
     }
 
     &:hover img {
       transform: translate(-50%, -50%) scale(1.02) !important;
+      overflow: hidden;
     }
   }
 
@@ -124,18 +133,22 @@
   @media (max-width: 1100px) {
     flex-direction: row; /* Keep side by side layout */
     padding: 0 30px;
-
+    overflow: hidden;
+    
     .about-content {
       h2 {
         font-size: 32px; /* Match global typography */
+        overflow: hidden;
       }
       p {
         max-width: 350px;
+        overflow: hidden;
       }
     }
 
     .about-images {
       max-width: 250px;
+      overflow: hidden;
     }
   }
 
@@ -143,10 +156,12 @@
     .about-content {
       h2 {
         font-size: 1.5rem;
+        overflow: hidden;
       }
       p {
         font-size: 0.8rem;
         width: 300px;
+        overflow: hidden;
       }
       .scroll-indicator {
         display: none;
@@ -160,7 +175,8 @@
     height: auto;
     min-height: calc(100vh - var(--navbar-height, 80px));
     position: relative; /* Ensure positioning context */
-
+    overflow: hidden;
+    
     .about-content {
       padding-top: 2rem;
       justify-content: flex-start;
@@ -168,15 +184,18 @@
       min-height: 270px; /* Set minimum height to contain content */
       position: relative;
       text-align: center;
-
+      overflow: hidden;
+      
       h2 {
         font-size: 2rem;
+        overflow: hidden;
       }
 
       p {
         font-size: 1rem;
         margin-top: 15px !important;
         min-height: 180px;
+        overflow: hidden;
       }
     }
 
@@ -205,14 +224,17 @@
         height: auto;
         object-fit: contain;
         transition: opacity 0.7s ease-in-out; /* Only animate opacity */
+        overflow: hidden;
       }
 
       .next-image {
         opacity: 0;
+        overflow: hidden;
       }
 
       &:hover img {
         transform: translate(-50%, -50%) scale(1.02) !important;
+        overflow: hidden;
       }
     }
   }
@@ -221,10 +243,12 @@
     .about-content {
       h2 {
         font-size: 1.5rem;
+        overflow: hidden;
       }
 
       p {
         font-size: 0.7rem;
+        overflow: hidden;
       }
     }
   }

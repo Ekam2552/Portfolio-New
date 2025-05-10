@@ -14,3 +14,4 @@ export const AnimationContext = React.createContext<AnimationContextType>({
   setLoaderComplete: () => {},
   timing: AnimationTiming,
 });
+ 

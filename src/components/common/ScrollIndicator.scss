@@ -7,23 +7,27 @@
   user-select: none;
   will-change: opacity, transform; /* Optimize for animations */
   z-index: 5; /* Lower z-index to prevent overlapping navbar overlay */
+  overflow: hidden;
 
   /* Position variants */
   &.position-left {
     left: 0;
     align-items: flex-start;
+    overflow: hidden;
   }
 
   &.position-center {
     left: 50%;
     transform: translateX(-50%);
     align-items: center;
+    overflow: hidden;
   }
 
   &.position-right {
     right: 0;
     left: auto;
     align-items: flex-end;
+    overflow: hidden;
   }
 
   .scroll-text {
@@ -32,6 +36,7 @@
     margin-bottom: 10px;
     opacity: 0.8;
     font-weight: 300;
+    overflow: hidden;
   }
 
   .scroll-arrows {
@@ -39,6 +44,7 @@
     flex-direction: row;
     align-items: center;
     padding: 4px;
+    overflow: hidden;
 
     .arrow {
       color: var(--text-secondary, #dddddd);
@@ -50,29 +56,35 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
 
       &.up {
         animation: bounce-up 2s infinite;
+        overflow: hidden;
       }
 
       &.down {
         animation: bounce-down 2s infinite;
         animation-delay: 0.5s;
+        overflow: hidden;
       }
 
       &.left {
         animation: bounce-left 2s infinite;
+        overflow: hidden;
       }
 
       &.right {
         animation: bounce-right 2s infinite;
         animation-delay: 0.5s;
+        overflow: hidden;
       }
     }
   }
 
   &:hover {
     opacity: 1;
+    overflow: hidden;
   }
 }
 
@@ -148,6 +160,7 @@
 @media (max-width: 1050px) {
   .scroll-indicator {
     bottom: 25px;
+    overflow: hidden;
   }
 }
 
@@ -162,6 +175,7 @@
       right: auto;
       transform: translateX(-50%);
       align-items: center;
+      overflow: hidden;
     }
   }
 }

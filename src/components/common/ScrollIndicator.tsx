@@ -50,8 +50,8 @@ const ScrollIndicator = ({
       <div className="scroll-arrows">
         {direction === "vertical" ? (
           <>
-            <div className="arrow up">↑</div>
-            <div className="arrow down">↓</div>
+        <div className="arrow up">↑</div>
+        <div className="arrow down">↓</div>
           </>
         ) : (
           <>

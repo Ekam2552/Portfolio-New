@@ -3,15 +3,18 @@
   width: calc(100% - 30px); /* 15px on each side = 30px total */
   max-width: 1310px; /* Max width from the design */
   height: 79px;
+  overflow: hidden;
 
   /* Position - absolute to ignore auto layout */
   position: absolute;
   left: 15px;
   top: 0;
+  overflow: hidden;
 
   /* Appearance */
   opacity: 1; /* 100% */
   border-radius: 0px;
+  overflow: hidden;
 
   /* Radial gradient fill */
   background: radial-gradient(
@@ -36,11 +39,13 @@
     filter: blur(15px);
     -webkit-filter: blur(15px);
     z-index: -1;
+    overflow: hidden;
   }
 
   /* Additional filter effect for the blur */
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.1));
-
+  overflow: hidden;
+  
   /* Z-index to position it behind navbar content but above the background */
   z-index: 1;
 
@@ -49,10 +54,12 @@
     height: 70px; /* Slightly smaller height for mobile */
     left: 10px;
     width: calc(100% - 20px); /* 10px on each side = 20px total */
+    overflow: hidden;
   }
 
   /* Fixed zIndex issue when mobile menu is open to appear behind content */
   &.menu-open {
     z-index: 5; /* Lower than hamburger and nav items but higher than background */
+    overflow: hidden;
   }
 }

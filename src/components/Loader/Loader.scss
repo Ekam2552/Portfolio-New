@@ -30,6 +30,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .loader-content {
@@ -41,11 +42,13 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
+    overflow: hidden;
 
     > div {
       overflow: hidden; /* Contain the text animation */
       position: relative;
       line-height: 1.1;
+      overflow: hidden;
     }
   }
 
@@ -56,6 +59,7 @@
     color: var(--primary-text);
     letter-spacing: 8px;
     transform-origin: center;
+    overflow: hidden;
   }
 
   .name-line {
@@ -65,6 +69,7 @@
     color: var(--optional-pop-accent-for-links-and-buttons);
     letter-spacing: 4px;
     transform-origin: center;
+    overflow: hidden;
   }
 
   .role-line {
@@ -75,6 +80,7 @@
     letter-spacing: 6px;
     transform-origin: center;
     margin-top: 0.5rem;
+    overflow: hidden;
   }
 
   .tagline-line {
@@ -85,6 +91,7 @@
     letter-spacing: 2px;
     transform-origin: center;
     margin-top: 2rem;
+    overflow: hidden;
 
     &::before,
     &::after {
@@ -96,6 +103,7 @@
       margin: 0 15px;
       position: relative;
       top: -5px;
+      overflow: hidden;
     }
   }
 
@@ -116,6 +124,7 @@
     font-variant-numeric: tabular-nums; // To prevent layout shifts while numbers change
     min-width: 5ch; // Ensure consistent width
     display: inline-block;
+    overflow: hidden;
   }
 
   /* Tablet and landscape mobile breakpoint */
@@ -123,38 +132,45 @@
     .loader-content {
       max-width: 85%;
       gap: 1.2rem;
+      overflow: hidden;
     }
 
     .title-line {
       font-size: 3rem;
       letter-spacing: 7px;
+      overflow: hidden;
     }
 
     .name-line {
       font-size: 4.2rem;
       letter-spacing: 3.5px;
+      overflow: hidden;
     }
 
     .role-line {
       font-size: 1.3rem;
       letter-spacing: 5px;
+      overflow: hidden;
     }
 
     .tagline-line {
       font-size: 1.1rem;
       letter-spacing: 1.5px;
       margin-top: 1.8rem;
+      overflow: hidden;
 
       &::before,
       &::after {
         width: 35px;
         margin: 0 12px;
+        overflow: hidden;
       }
     }
 
     .percentage-line {
       font-size: 2.8rem;
       margin-top: 1.8rem;
+      overflow: hidden;
     }
   }
 
@@ -163,32 +179,39 @@
     .title-line {
       font-size: 2rem;
       letter-spacing: 6px;
+      overflow: hidden;
+      overflow: hidden;
     }
 
     .name-line {
       font-size: 3.5rem;
       letter-spacing: 3px;
+      overflow: hidden;
     }
 
     .role-line {
       font-size: 1.2rem;
       letter-spacing: 4px;
+      overflow: hidden;
     }
 
     .tagline-line {
       font-size: 1rem;
       letter-spacing: 1px;
+      overflow: hidden;
 
       &::before,
       &::after {
         width: 20px;
         margin: 0 10px;
+        overflow: hidden;
       }
     }
 
     .percentage-line {
       font-size: 2.5rem;
       margin-top: 1.5rem;
+      overflow: hidden;
     }
   }
 }

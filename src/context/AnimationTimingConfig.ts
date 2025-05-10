@@ -7,3 +7,4 @@ export const AnimationTiming = {
   TRANSITION_DURATION: 0.8, // Default transition duration in seconds
   PAGE_TRANSITION: 1.2, // Default page transition duration in seconds
 };
+ 

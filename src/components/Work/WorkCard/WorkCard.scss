@@ -11,6 +11,7 @@
   &.details-showing {
     /* Replace teal with the correct purple color */
     outline: 3px solid var(--optional-pop-accent-for-links-and-buttons);
+    overflow: hidden;
   }
 
   // img {
@@ -23,6 +24,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    overflow: hidden;
   }
 
   .frosted-overlay {
@@ -35,6 +37,7 @@
     backdrop-filter: blur(5px);
     z-index: 1;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .card-details {
@@ -50,9 +53,11 @@
     padding: 10px;
     align-items: flex-start;
     justify-content: space-between;
+    overflow: hidden;
 
     h4 {
       height: auto;
+      overflow: hidden;
     }
 
     .card-details-container {
@@ -61,6 +66,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0 20px;
+      overflow: hidden;
     }
 
     .tap-hint {
@@ -73,6 +79,7 @@
       padding: 5px 0;
       margin-top: 5px;
       animation: pulse 1.5s infinite;
+      overflow: hidden;
     }
   }
 
@@ -80,16 +87,20 @@
   @media (max-width: 1100px) {
     width: 100%;
     height: 320px;
+    overflow: hidden;
 
     .card-details {
       width: 200px;
+      overflow: hidden;
 
       .card-details-container {
         height: 235px;
+        overflow: hidden;
       }
 
       .tap-hint {
         font-size: 0.75rem;
+        overflow: hidden;
       }
     }
   }
@@ -100,24 +111,29 @@
 
     .card-details {
       width: 180px;
+      overflow: hidden;
 
       h4 {
         font-size: 0.9rem;
         margin-bottom: 5px;
+        overflow: hidden;
       }
 
       .card-details-container {
         height: 140px;
         gap: 0 10px;
+        overflow: hidden;
       }
 
       .paragraph {
         font-size: 0.7rem;
+        overflow: hidden;
       }
 
       .tap-hint {
         font-size: 0.65rem;
         margin-top: 2px;
+        overflow: hidden;
       }
     }
   }
@@ -126,21 +142,26 @@
   @media (max-width: 600px) {
     width: 100%;
     height: 250px;
+    overflow: hidden;
 
     .card-details {
       width: 150px;
+      overflow: hidden;
 
       .card-details-container {
         height: 180px;
         gap: 0 10px;
+        overflow: hidden;
       }
 
       .paragraph {
         font-size: 12px;
+        overflow: hidden;
       }
 
       .tap-hint {
         font-size: 0.7rem;
+        overflow: hidden;
       }
     }
   }
@@ -148,28 +169,34 @@
   /* Landscape mode adjustments for mobile */
   @media (max-width: 600px) and (max-height: 450px) {
     height: 150px; /* Much smaller height for mobile landscape */
+    overflow: hidden;
 
     .card-details {
       width: 120px;
       padding: 5px;
+      overflow: hidden;
 
       h4 {
         font-size: 0.8rem;
         margin-bottom: 2px;
+        overflow: hidden;
       }
 
       .card-details-container {
         height: 100px;
+        overflow: hidden;
       }
 
       .paragraph {
         font-size: 0.6rem;
+        overflow: hidden;
       }
 
       .tap-hint {
         font-size: 0.6rem;
         margin-top: 1px;
         padding: 2px 0;
+        overflow: hidden;
       }
     }
   }
@@ -177,24 +204,30 @@
   /* Extra small screens */
   @media (max-width: 400px) {
     height: 220px;
+    overflow: hidden;
 
     .card-details {
       width: 130px;
+      overflow: hidden;
 
       h4 {
         font-size: 14px;
+        overflow: hidden;
       }
 
       .card-details-container {
         height: 160px;
+        overflow: hidden;
       }
 
       .paragraph {
         font-size: 10px;
+        overflow: hidden;
       }
 
       .tap-hint {
         font-size: 0.65rem;
+        overflow: hidden;
       }
     }
   }

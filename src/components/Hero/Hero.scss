@@ -12,6 +12,7 @@
   .reveal-text {
     position: relative;
     z-index: 1;
+    overflow: hidden;
   }
 
   /* Support for text-curtain elements with improved edge handling */
@@ -21,6 +22,7 @@
     display: inline-block;
     z-index: 10; /* Ensure it's above other elements */
     vertical-align: top; /* Ensure consistent vertical alignment */
+    overflow: hidden;
 
     /* Fix for text edges showing through */
     &::before {
@@ -32,6 +34,7 @@
       bottom: 0;
       z-index: 0;
       background-color: transparent;
+      overflow: hidden;
     }
 
     .text-curtain {
@@ -42,6 +45,7 @@
       height: 101%; /* Extra height to prevent edge artifacts */
       background-color: var(--primary-background);
       z-index: 2;
+      overflow: hidden;
     }
   }
 
@@ -49,6 +53,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
   }
 
   .hero-video {
@@ -58,6 +63,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    overflow: hidden;
   }
 
   .overlay {
@@ -70,6 +76,7 @@
     opacity: 1; /* Initial opacity set to 1 (fully opaque) for animation */
     z-index: 1; /* Ensures the overlay is above the video */
     will-change: opacity; /* Optimize for opacity animation */
+    overflow: hidden;
   }
 
   .hero-content {
@@ -86,17 +93,20 @@
     align-items: center;
     padding: 0;
     margin: 0;
+    overflow: hidden;
 
     .home-title {
       max-width: 651px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
 
       h1 {
         /* Ensure the text container is properly positioned for the curtain animation */
         position: relative;
         display: inline-block;
         margin-bottom: 0; /* Remove any bottom margin */
+        overflow: hidden;
       }
 
       .paragraph {
@@ -104,12 +114,14 @@
         max-width: 534px;
         position: relative;
         display: inline-block;
+        overflow: hidden;
       }
 
       /* Ensure consistent spacing with animation wrappers */
       h1 + .text-reveal-wrapper,
       .text-reveal-wrapper + .text-reveal-wrapper {
         margin-top: 40px;
+        overflow: hidden;
       }
     }
   }
@@ -118,17 +130,21 @@
   @media screen and (max-width: 1100px) {
     .hero-content {
       padding: 0 40px;
-
+      overflow: hidden;
+      
       .home-title {
         max-width: 580px;
-
+        overflow: hidden;
+        
         h1 {
           font-size: 42px; /* Match global typography */
+          overflow: hidden;
         }
 
         .paragraph {
           margin-top: 30px !important;
           max-width: 100%;
+          overflow: hidden;
         }
       }
     }
@@ -141,7 +157,8 @@
       justify-content: center;
       padding: 0 40px;
       gap: 50px;
-
+      overflow: hidden;
+      
       .home-title {
         max-width: 100%;
         text-align: center;
@@ -149,11 +166,13 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        overflow: hidden;
 
         .paragraph {
           max-width: 80%;
           margin-left: auto;
           margin-right: auto;
+          overflow: hidden;
         }
       }
     }
@@ -166,23 +185,27 @@
     .hero-content {
       padding: 0 20px;
       gap: 0;
-
+      overflow: hidden;
+      
       .home-title {
         margin-bottom: 0;
         height: auto;
-
+        overflow: hidden;
+        
         h1 {
           /* Typography is already handled in index.scss for h1 */
           /* font-size is reduced to 36px on mobile */
           font-size: 36px;
           max-width: 100%;
           margin-bottom: 0;
+          overflow: hidden;
         }
 
         .paragraph {
           margin-top: 24px !important; /* Use !important to override for mobile */
           transform: scale(0.8);
           max-width: 100%;
+          overflow: hidden;
         }
       }
     }
@@ -193,17 +216,21 @@
     .hero-content {
       padding-top: 30px;
       align-items: flex-start;
-
+      overflow: hidden;
+      
       .home-title {
         margin-bottom: 20px;
-
+        overflow: hidden;
+        
         h1 {
           font-size: 28px;
+          overflow: hidden;
         }
 
         .paragraph {
           margin-top: 15px !important; /* Use !important to override for landscape */
           font-size: 14px;
+          overflow: hidden;
         }
       }
     }
