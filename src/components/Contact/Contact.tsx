@@ -1,9 +1,24 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./Contact.scss";
 import InputField from "./InputField/InputField";
 import emailjs from "@emailjs/browser";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { useAnimationContext } from "../../context/useAnimationContext";
+import { applyCurtainRevealToElement } from "../../utils/animations/textRevealAnimations";
+
+// Register the GSAP plugin
+gsap.registerPlugin(useGSAP);
 
 const Contact = () => {
+  // Create refs for the elements we want to animate
+  const contactRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // Get the animation context
+  const { loaderComplete, timing } = useAnimationContext();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,6 +33,96 @@ const Contact = () => {
     success: boolean;
     message: string;
   } | null>(null);
+
+  // Cleanup function to remove animation-related elements
+  const cleanupAnimationElements = () => {
+    if (!contactRef.current) return;
+
+    // Find all text elements with reveal-text class
+    const textElements = contactRef.current.querySelectorAll(".reveal-text");
+
+    textElements.forEach((element) => {
+      const el = element as HTMLElement;
+      const parent = el.parentElement;
+
+      // If wrapped in a text-reveal-wrapper, unwrap it
+      if (parent?.classList.contains("text-reveal-wrapper")) {
+        const grandParent = parent.parentElement;
+        if (grandParent) {
+          // Preserve the original margin-top
+          const computedStyle = window.getComputedStyle(parent);
+          el.style.marginTop = computedStyle.marginTop;
+
+          // Unwrap the element
+          grandParent.insertBefore(el, parent);
+          grandParent.removeChild(parent);
+        }
+      }
+    });
+  };
+
+  // Text reveal animation for heading
+  useGSAP(
+    () => {
+      if (!contactRef.current || !loaderComplete || !headingRef.current) return;
+
+      // Clean up any existing animation elements
+      cleanupAnimationElements();
+
+      // Apply curtain reveal to heading
+      applyCurtainRevealToElement(headingRef.current, {
+        direction: "left",
+        duration: 1.5,
+        ease: "power3.out",
+        delay: timing.POST_LOADER_DELAY / 1000,
+        curtainColor: "var(--primary-background)",
+      });
+
+      return () => {
+        cleanupAnimationElements();
+      };
+    },
+    { dependencies: [loaderComplete, timing], scope: contactRef }
+  );
+
+  // Fade-in animation for form elements
+  useGSAP(
+    () => {
+      if (!formRef.current || !loaderComplete) return;
+
+      // Get all input fields
+      const formElements = formRef.current.querySelectorAll(".input-field");
+      const submitButton = formRef.current.querySelector(
+        ".form-submit-container"
+      );
+
+      // Set initial state - hidden
+      gsap.set([formElements, submitButton], {
+        opacity: 0,
+        y: 20,
+      });
+
+      // Create staggered animation
+      gsap.to(formElements, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out",
+        delay: timing.POST_LOADER_DELAY / 1000 + 0.5, // Start after heading animation
+      });
+
+      // Animate submit button after form fields
+      gsap.to(submitButton, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        delay: timing.POST_LOADER_DELAY / 1000 + 1.2, // Start after all form fields
+      });
+    },
+    { dependencies: [loaderComplete, timing], scope: formRef }
+  );
 
   const handleChange = (field: string, value: string | string[]) => {
     setFormData({
@@ -93,10 +198,12 @@ const Contact = () => {
   ];
 
   return (
-    <div className="contact">
-      <h1>Tell Me About Your Vision – I'll Handle the Code & Design!</h1>
+    <div className="contact" ref={contactRef}>
+      <h1 ref={headingRef} className="reveal-text">
+        Tell Me About Your Vision – I'll Handle the Code & Design!
+      </h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <InputField
           label="Name"
           type="input"
