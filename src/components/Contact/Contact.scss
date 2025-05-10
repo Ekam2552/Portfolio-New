@@ -23,24 +23,6 @@
       flex-direction: column;
       gap: 15px;
       margin-top: 20px;
-
-      .status-message {
-        padding: 15px;
-        border-radius: 4px;
-        font-weight: var(--weight-medium);
-
-        &.success {
-          background-color: rgba(39, 174, 96, 0.1);
-          border: 1px solid #27ae60;
-          color: #27ae60;
-        }
-
-        &.error {
-          background-color: rgba(235, 87, 87, 0.1);
-          border: 1px solid #eb5757;
-          color: #eb5757;
-        }
-      }
     }
 
     button[type="submit"] {

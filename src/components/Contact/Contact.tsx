@@ -6,6 +6,8 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useAnimationContext } from "../../context/useAnimationContext";
 import { applyCurtainRevealToElement } from "../../utils/animations/textRevealAnimations";
+import { validateForm } from "./validationUtils";
+import StatusModal from "./StatusModal/StatusModal";
 
 // Register the GSAP plugin
 gsap.registerPlugin(useGSAP);
@@ -26,6 +28,15 @@ const Contact = () => {
     services: [],
     budget: "",
     timeline: "",
+  });
+
+  const [errors, setErrors] = useState<Record<string, string | null>>({
+    name: null,
+    email: null,
+    services: null,
+    budget: null,
+    timeline: null,
+    projectDetails: null,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -125,6 +136,12 @@ const Contact = () => {
   );
 
   const handleChange = (field: string, value: string | string[]) => {
+    // Clear the error for this field when it changes
+    setErrors({
+      ...errors,
+      [field]: null,
+    });
+
     setFormData({
       ...formData,
       [field]: value,
@@ -140,10 +157,37 @@ const Contact = () => {
       budget: "",
       timeline: "",
     });
+    setErrors({
+      name: null,
+      email: null,
+      services: null,
+      budget: null,
+      timeline: null,
+      projectDetails: null,
+    });
+  };
+
+  const handleCloseModal = () => {
+    setSubmitStatus(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate the form
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    // Check if there are any errors
+    const hasErrors = Object.values(validationErrors).some(
+      (error) => error !== null
+    );
+
+    // If there are errors, don't submit the form
+    if (hasErrors) {
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
@@ -160,8 +204,6 @@ const Contact = () => {
       };
 
       // Send the email using EmailJS
-      // Note: You need to create an account on EmailJS and set up a service and template
-      // Replace 'YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', and 'YOUR_PUBLIC_KEY' with your actual values
       const response = await emailjs.send(
         import.meta.env.VITE_EMAIL_SERVICE_ID,
         import.meta.env.VITE_EMAIL_TEMPLATE_ID,
@@ -210,6 +252,7 @@ const Contact = () => {
           placeholder="Your name"
           value={formData.name}
           onChange={(value) => handleChange("name", value as string)}
+          error={errors.name}
         />
 
         <InputField
@@ -219,6 +262,7 @@ const Contact = () => {
           placeholder="Your email address"
           value={formData.email}
           onChange={(value) => handleChange("email", value as string)}
+          error={errors.email}
         />
 
         <InputField
@@ -227,6 +271,7 @@ const Contact = () => {
           options={serviceOptions}
           value={formData.services}
           onChange={(value) => handleChange("services", value as string[])}
+          error={errors.services}
         />
 
         <InputField
@@ -236,6 +281,7 @@ const Contact = () => {
           placeholder="Your budget (in USD)"
           value={formData.budget}
           onChange={(value) => handleChange("budget", value as string)}
+          error={errors.budget}
         />
 
         <InputField
@@ -245,6 +291,7 @@ const Contact = () => {
           placeholder="Your estimated timeline (in days)"
           value={formData.timeline}
           onChange={(value) => handleChange("timeline", value as string)}
+          error={errors.timeline}
         />
 
         <InputField
@@ -253,24 +300,23 @@ const Contact = () => {
           placeholder="Tell me about your project"
           value={formData.projectDetails}
           onChange={(value) => handleChange("projectDetails", value as string)}
+          error={errors.projectDetails}
         />
 
         <div className="form-submit-container">
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>
-
-          {submitStatus && (
-            <div
-              className={`status-message ${
-                submitStatus.success ? "success" : "error"
-              }`}
-            >
-              {submitStatus.message}
-            </div>
-          )}
         </div>
       </form>
+
+      {submitStatus && (
+        <StatusModal
+          success={submitStatus.success}
+          message={submitStatus.message}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };

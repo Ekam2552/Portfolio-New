@@ -9,6 +9,7 @@ type InputFieldProps = {
   options?: string[]; // For card options
   onChange?: (value: string | string[]) => void;
   value?: string | string[];
+  error?: string | null; // Add error prop
 };
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -19,6 +20,7 @@ const InputField: React.FC<InputFieldProps> = ({
   options = [],
   onChange,
   value,
+  error, // Add error prop
 }) => {
   const [selectedCards, setSelectedCards] = React.useState<string[]>(
     Array.isArray(value) ? value : []
@@ -46,41 +48,47 @@ const InputField: React.FC<InputFieldProps> = ({
   };
 
   return (
-    <div className="input-field">
+    <div className={`input-field ${error ? "has-error" : ""}`}>
       <h3>{label}</h3>
 
-      {type === "input" && (
-        <input
-          type={inputType}
-          placeholder={placeholder}
-          value={value as string}
-          onChange={handleInputChange}
-        />
-      )}
+      <div className="input-container">
+        {type === "input" && (
+          <input
+            type={inputType}
+            placeholder={placeholder}
+            value={value as string}
+            onChange={handleInputChange}
+            className={error ? "error" : ""}
+          />
+        )}
 
-      {type === "textarea" && (
-        <textarea
-          placeholder={placeholder}
-          value={value as string}
-          onChange={handleInputChange}
-        ></textarea>
-      )}
+        {type === "textarea" && (
+          <textarea
+            placeholder={placeholder}
+            value={value as string}
+            onChange={handleInputChange}
+            className={error ? "error" : ""}
+          ></textarea>
+        )}
 
-      {type === "cards" && (
-        <div className="cards">
-          {options.map((option) => (
-            <div
-              key={option}
-              className={`card ${
-                selectedCards.includes(option) ? "selected" : ""
-              }`}
-              onClick={() => handleCardClick(option)}
-            >
-              {option}
-            </div>
-          ))}
-        </div>
-      )}
+        {type === "cards" && (
+          <div className={`cards ${error ? "error" : ""}`}>
+            {options.map((option) => (
+              <div
+                key={option}
+                className={`card ${
+                  selectedCards.includes(option) ? "selected" : ""
+                }`}
+                onClick={() => handleCardClick(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {error && <div className="error-message">{error}</div>}
+      </div>
     </div>
   );
 };
