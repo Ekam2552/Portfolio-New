@@ -8,6 +8,7 @@ import Hero from "./components/Hero/Hero";
 import About from "./components/About/About";
 import Work from "./components/Work/Work";
 import Contact from "./components/Contact/Contact";
+import Footer from "./components/Footer/Footer";
 // Animation Context
 import { AnimationProvider } from "./context/AnimationContext";
 
@@ -62,6 +63,7 @@ function App() {
         {activeSection === "Contact" && <Contact />}
         {/* Other sections will be added later */}
       </div>
+      <Footer />
     </AnimationProvider>
   );
 }
