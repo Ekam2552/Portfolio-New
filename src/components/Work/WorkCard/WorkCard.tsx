@@ -10,6 +10,9 @@ interface WorkCardProps {
   video: string;
   link: string;
   id: string; // Add id to identify each card uniquely
+  styles?: {
+    video?: React.CSSProperties;
+  };
 }
 
 // Custom event name for card clicks
@@ -45,7 +48,14 @@ const isTouchDevice = () => {
   return hasTouchPoints && (isTabletViewport || isIPad || isAndroidTablet);
 };
 
-const WorkCard = ({ title, techStack, video, link, id }: WorkCardProps) => {
+const WorkCard = ({
+  title,
+  techStack,
+  video,
+  link,
+  id,
+  styles,
+}: WorkCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const detailsRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -221,7 +231,7 @@ const WorkCard = ({ title, techStack, video, link, id }: WorkCardProps) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {video && <video src={video} autoPlay muted loop />}
+      {video && <video src={video} autoPlay muted loop style={styles?.video} />}
       <div ref={overlayRef} className="frosted-overlay" />
       <div className="card-details" ref={detailsRef}>
         <h4>{title}</h4>

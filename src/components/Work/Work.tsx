@@ -171,6 +171,7 @@ const Work = () => {
             image={work.image || ""}
             video={work.video || ""}
             link={work.link || ""}
+            styles={work.styles}
           />
         ))}
       </div>

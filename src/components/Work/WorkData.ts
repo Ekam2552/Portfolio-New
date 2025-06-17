@@ -1,4 +1,5 @@
 import Project1Video from "../../assets/Project1.mp4";
+import MealsToGo from "../../assets/MealsToGo.mp4";
 
 interface WorkData {
   id: number;
@@ -7,6 +8,9 @@ interface WorkData {
   image: string | null;
   video: string | null;
   link: string | null;
+  styles?: {
+    video?: React.CSSProperties;
+  };
 }
 
 const workData: WorkData[] = [
@@ -31,11 +35,26 @@ const workData: WorkData[] = [
   },
   {
     id: 2,
-    title: "Coming Soon",
-    techStack: [],
+    title: "Meals To Go",
+    techStack: [
+      "React Native",
+      "Expo",
+      "Firebase",
+      "Lottie",
+      "GeoCoding",
+      "Figma",
+      "Git",
+      "GitHub",
+    ],
     image: null,
-    video: null,
-    link: null,
+    video: MealsToGo,
+    link: "https://github.com/Ekam2552/MealsToGo",
+    styles: {
+      video: {
+        objectFit: "contain",
+        objectPosition: "center",
+      },
+    },
   },
   {
     id: 3,
