@@ -34,6 +34,7 @@ A sleek, cinematic, and futuristic portfolio that showcases my skills and projec
 ## 📱 Responsive Design
 
 The portfolio is fully responsive with carefully crafted breakpoints:
+
 - Desktop (1400px+)
 - Tablet landscape (1100px)
 - Tablet portrait (768px)
@@ -76,12 +77,27 @@ npm run preview
 Create a `.env` file in the root directory with the following variables:
 
 ```
+# Social Media & Contact Links
 VITE_LINKEDIN_URL=your_linkedin_url
 VITE_INSTAGRAM_URL=your_instagram_url
 VITE_GITHUB_URL=your_github_url
 VITE_EMAIL_ADDRESS=your_email
 VITE_PHONE_NUMBER=your_phone
+
+# EmailJS Configuration (for contact form)
+# Get these from https://www.emailjs.com/
+VITE_EMAIL_SERVICE_ID=your_emailjs_service_id
+VITE_EMAIL_TEMPLATE_ID=your_emailjs_template_id
+VITE_EMAIL_PUBLIC_KEY=your_emailjs_public_key
 ```
+
+### Setting up EmailJS
+
+1. Create an account at [EmailJS](https://www.emailjs.com/)
+2. Add an email service (Gmail, Outlook, etc.)
+3. Create an email template with the following variables:
+   - `{{to_name}}`, `{{from_name}}`, `{{from_email}}`, `{{projectDetails}}`, `{{services}}`, `{{budget}}`, `{{timeline}}`
+4. Copy your Service ID, Template ID, and Public Key to the `.env` file
 
 ## 📄 Project Structure
 

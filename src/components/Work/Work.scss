@@ -32,6 +32,11 @@
     }
   }
 
+  /* Override reveal-text styles for h1 elements */
+  h1.reveal-text {
+    overflow: visible !important; /* Override the global reveal-text overflow: hidden */
+  }
+
   /* Tablet and landscape mobile breakpoint */
   @media (max-width: 1100px) {
     gap: 40px;
@@ -44,7 +49,7 @@
 
     h1 {
       margin-bottom: 0;
-      overflow: hidden;
+      overflow: visible !important; /* Ensure h1 doesn't have hidden overflow */
     }
 
     .cards-holder {

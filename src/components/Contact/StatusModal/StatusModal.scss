@@ -23,6 +23,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   text-align: center;
   animation: slideIn 0.3s ease;
+  overflow: visible !important; /* Ensure modal content is not clipped */
 
   &.success {
     border-top: 4px solid #4caf50;
@@ -68,10 +69,16 @@
     width: 60px;
     height: 60px;
     margin: 0 auto 15px;
+    overflow: visible !important; /* Ensure icon is not clipped */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     svg {
       width: 100%;
       height: 100%;
+      overflow: visible !important; /* Ensure SVG paths are not clipped */
+      display: block;
     }
   }
 
@@ -114,11 +121,17 @@
 @media screen and (max-width: 600px) {
   .status-modal {
     padding: 25px 20px;
+    overflow: visible !important; /* Ensure modal content is not clipped on mobile */
 
     .status-icon {
       width: 50px;
       height: 50px;
       margin-bottom: 12px;
+      overflow: visible !important; /* Ensure icon is not clipped on mobile */
+
+      svg {
+        overflow: visible !important; /* Ensure SVG is not clipped on mobile */
+      }
     }
 
     h3 {
