@@ -1,6 +1,7 @@
 import Project1Video from '../../assets/Project1.mp4';
 import MealsToGo from '../../assets/MealsToGo.mp4';
 import Novelify from '../../assets/Novelify.mp4';
+import StrongFitVideo from "../../assets/StrongFit Demo.mov"
 
 interface WorkData {
   id: number;
@@ -73,6 +74,21 @@ const workData: WorkData[] = [
     image: null,
     video: Novelify,
     link: 'https://github.com/Ekam2552/Novelify-Frontend',
+  },
+  {
+    id: 4,
+    title: 'Strong&Fit',
+    techStack: [
+      'Webflow',
+      'Figma',
+      'Design Principles',
+      'Responsive Design',
+      'GSAP',
+      'CMS'
+    ],
+    image: null,
+    video: StrongFitVideo,
+    link: 'https://github.com/Ekam2552/StrongFit-Frontend',
   },
 ];
 

@@ -25,7 +25,8 @@ export const aboutContent: AboutContentProps[] = [
     title: "Tech Stack",
     description: `Frontend: React.js, Next.js, Tailwind CSS
 Backend: Node.js, Express, MongoDB
-Design: Figma, Webflow`,
+Design: Figma, Webflow
+No-Code: Webflow, CMS Management`,
   },
   {
     id: 3,
