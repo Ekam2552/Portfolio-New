@@ -1,7 +1,7 @@
 import Project1Video from '../../assets/Project1.mp4';
 import MealsToGo from '../../assets/MealsToGo.mp4';
 import Novelify from '../../assets/Novelify.mp4';
-import StrongFitVideo from "../../assets/StrongFit Demo.mov"
+import StrongFitVideo from "../../assets/StrongFit Demo.mp4"
 
 interface WorkData {
   id: number;
