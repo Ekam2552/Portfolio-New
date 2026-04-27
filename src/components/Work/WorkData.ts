@@ -1,7 +1,9 @@
 import Project1Video from '../../assets/Project1.mp4';
 import MealsToGo from '../../assets/MealsToGo.mp4';
 import Novelify from '../../assets/Novelify.mp4';
-import StrongFitVideo from "../../assets/StrongFit Demo.mp4"
+import StrongFitVideo from "../../assets/StrongFit Demo.mp4";
+import LuminaDentalVideo from '../../assets/LuminaDental.mp4';
+import VanguardInteriorVideo from '../../assets/VanguardInterior.mp4';
 
 interface WorkData {
   id: number;
@@ -88,7 +90,35 @@ const workData: WorkData[] = [
     ],
     image: null,
     video: StrongFitVideo,
-    link: 'https://github.com/Ekam2552/StrongFit-Frontend',
+    link: 'https://strong-fit.webflow.io/',
+  },
+  {
+    id: 5,
+    title: 'Lumina Dental',
+    techStack: [
+      'React',
+      'SCSS',
+      'GSAP',
+      'Supabase',
+      'Vercel'
+    ],
+    image: null,
+    video: LuminaDentalVideo,
+    link: 'https://dental-webapp.vercel.app/',
+  },
+  {
+    id: 6,
+    title: 'Vanguard Interior',
+    techStack: [
+      'Next.js',
+      'Tailwind CSS',
+      'GSAP',
+      'Figma',
+      'Lenis Smooth Scroll'
+    ],
+    image: null,
+    video: VanguardInteriorVideo,
+    link: 'https://vanguard-interior.vercel.app/',
   },
 ];
 
