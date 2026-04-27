@@ -27,7 +27,6 @@ const About = () => {
   const [contentIndex, setContentIndex] = useState(0); // Start with index 0 from aboutContent
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeoutRef = useRef<number | null>(null);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   // Get the loader completion state from context
   const { loaderComplete, timing } = useAnimationContext();
