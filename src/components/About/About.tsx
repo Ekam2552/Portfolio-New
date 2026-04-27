@@ -27,7 +27,6 @@ const About = () => {
   const [contentIndex, setContentIndex] = useState(0); // Start with index 0 from aboutContent
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollTimeoutRef = useRef<number | null>(null);
-  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
   // Get the loader completion state from context
   const { loaderComplete, timing } = useAnimationContext();
@@ -59,146 +58,78 @@ const About = () => {
     });
   };
 
+  // Use refs for state tracking in event listeners to avoid stale closures
+  // and prevent constant re-adding of event listeners
+  const contentIndexRef = useRef(0);
+  const isScrollingRef = useRef(false);
+  const touchStartYRef = useRef<number | null>(null);
+
+  // Sync refs with state
+  useEffect(() => { contentIndexRef.current = contentIndex; }, [contentIndex]);
+  useEffect(() => { isScrollingRef.current = isScrolling; }, [isScrolling]);
+
   // Handle scroll content cycling
   useEffect(() => {
-    if (!contentRef.current || !loaderComplete) return;
+    if (!loaderComplete) return;
 
-    // Force reset scrolling state after a certain time as a safety measure
     const safetyReset = () => {
-      if (isScrolling) {
-        setIsScrolling(false);
-      }
+      setIsScrolling(false);
+      isScrollingRef.current = false;
     };
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
+      if (isScrollingRef.current) return;
 
-      // Don't process wheel events if already scrolling
-      if (isScrolling) return;
-
-      // Set scrolling state to debounce rapid scrolling
       setIsScrolling(true);
+      isScrollingRef.current = true;
 
-      // Determine scroll direction
       const direction = e.deltaY > 0 ? "down" : "up";
+      const currentIndex = contentIndexRef.current;
+      let newIndex = direction === "down" 
+        ? (currentIndex + 1) % aboutContent.length
+        : (currentIndex === 0 ? aboutContent.length - 1 : currentIndex - 1);
 
-      // Calculate next content index
-      let newIndex = contentIndex;
-      if (direction === "down") {
-        newIndex = (contentIndex + 1) % aboutContent.length;
-      } else {
-        newIndex =
-          contentIndex === 0 ? aboutContent.length - 1 : contentIndex - 1;
-      }
-
-      // Handle content cycling animation
       updateContent(direction, newIndex);
-
-      // Set a safety timeout to reset scrolling state if animation fails
       setTimeout(safetyReset, 1500);
     };
 
-    // Touch event handlers for mobile
     const handleTouchStart = (e: TouchEvent) => {
-      // Store the initial touch position
-      setTouchStartY(e.touches[0].clientY);
+      touchStartYRef.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      // Prevent default to stop page scrolling
       e.preventDefault();
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (touchStartY === null || isScrolling) return;
+      if (touchStartYRef.current === null || isScrollingRef.current) return;
 
       const touchEndY = e.changedTouches[0].clientY;
-      const touchDiff = touchStartY - touchEndY;
+      const touchDiff = touchStartYRef.current - touchEndY;
+      touchStartYRef.current = null;
 
-      // Only trigger if the swipe is significant enough (prevents accidental triggers)
       if (Math.abs(touchDiff) < 30) return;
 
       setIsScrolling(true);
+      isScrollingRef.current = true;
 
-      // Determine swipe direction (negative = swipe down, positive = swipe up)
       const direction = touchDiff > 0 ? "down" : "up";
+      const currentIndex = contentIndexRef.current;
+      let newIndex = direction === "down" 
+        ? (currentIndex + 1) % aboutContent.length
+        : (currentIndex === 0 ? aboutContent.length - 1 : currentIndex - 1);
 
-      // Calculate next content index
-      let newIndex = contentIndex;
-      if (direction === "down") {
-        newIndex = (contentIndex + 1) % aboutContent.length;
-      } else {
-        newIndex =
-          contentIndex === 0 ? aboutContent.length - 1 : contentIndex - 1;
-      }
-
-      // Handle content cycling animation
       updateContent(direction, newIndex);
-
-      // Reset touch start position
-      setTouchStartY(null);
-
-      // Set a safety timeout to reset scrolling state if animation fails
       setTimeout(safetyReset, 1500);
-    };
-
-    // Function to handle content updating animation
-    const updateContent = (direction: "up" | "down", newIndex: number) => {
-      if (titleRef.current && paragraphRef.current) {
-        const tl = gsap.timeline({
-          defaults: { ease: "power2.inOut" },
-          onComplete: () => {
-            // Allow scrolling again after animation + a small buffer
-            if (scrollTimeoutRef.current) {
-              window.clearTimeout(scrollTimeoutRef.current);
-            }
-
-            scrollTimeoutRef.current = window.setTimeout(() => {
-              setIsScrolling(false);
-            }, 200); // Small buffer after animation completes
-          },
-        });
-
-        // Initial fade out current content
-        tl.to([titleRef.current, paragraphRef.current], {
-          opacity: 0,
-          y: direction === "down" ? -20 : 20,
-          duration: 0.4,
-          stagger: 0.05,
-          onComplete: () => {
-            // Update content index after fade out
-            setContentIndex(newIndex);
-
-            // Reset position for entrance animation
-            gsap.set([titleRef.current, paragraphRef.current], {
-              y: direction === "down" ? 20 : -20,
-            });
-          },
-        });
-
-        // Fade in new content after a small delay
-        tl.to([titleRef.current, paragraphRef.current], {
-          opacity: 1,
-          y: 0,
-          duration: 0.4,
-          stagger: 0.05,
-          delay: 0.1,
-        });
-      }
     };
 
     const contentElement = textContainerRef.current;
     if (contentElement) {
       contentElement.addEventListener("wheel", handleWheel, { passive: false });
-      contentElement.addEventListener("touchstart", handleTouchStart, {
-        passive: false,
-      });
-      contentElement.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-      contentElement.addEventListener("touchend", handleTouchEnd, {
-        passive: false,
-      });
+      contentElement.addEventListener("touchstart", handleTouchStart, { passive: false });
+      contentElement.addEventListener("touchmove", handleTouchMove, { passive: false });
+      contentElement.addEventListener("touchend", handleTouchEnd, { passive: false });
     }
 
     return () => {
@@ -208,11 +139,50 @@ const About = () => {
         contentElement.removeEventListener("touchmove", handleTouchMove);
         contentElement.removeEventListener("touchend", handleTouchEnd);
       }
-      if (scrollTimeoutRef.current) {
-        window.clearTimeout(scrollTimeoutRef.current);
-      }
     };
-  }, [textContainerRef, contentIndex, isScrolling, loaderComplete, touchStartY]);
+  }, [loaderComplete]);
+
+  // Function to handle content updating animation
+  const updateContent = (direction: "up" | "down", newIndex: number) => {
+    if (titleRef.current && paragraphRef.current) {
+      const tl = gsap.timeline({
+        defaults: { ease: "power2.inOut" },
+        onComplete: () => {
+          if (scrollTimeoutRef.current) window.clearTimeout(scrollTimeoutRef.current);
+          scrollTimeoutRef.current = window.setTimeout(() => {
+            setIsScrolling(false);
+            isScrollingRef.current = false;
+          }, 200);
+        },
+      });
+
+      tl.to([titleRef.current, paragraphRef.current], {
+        opacity: 0,
+        y: direction === "down" ? -20 : 20,
+        duration: 0.4,
+        stagger: 0.05,
+        onComplete: () => {
+          setContentIndex(newIndex);
+          gsap.set([titleRef.current, paragraphRef.current], {
+            y: direction === "down" ? 20 : -20,
+          });
+        },
+      });
+
+      tl.to([titleRef.current, paragraphRef.current], {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        delay: 0.1,
+      });
+    } else {
+      // Fallback if refs are missing
+      setContentIndex(newIndex);
+      setIsScrolling(false);
+      isScrollingRef.current = false;
+    }
+  };
 
   // Text reveal animations
   useGSAP(
