@@ -211,10 +211,23 @@ const AsciiPortrait: React.FC<AsciiPortraitProps> = ({
 
     const init = () => {
       const rect = container.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const newWidth = Math.floor(rect.width);
+      const newHeight = Math.floor(rect.height);
 
-      buildParticles(canvas.width, canvas.height);
+      // Only rebuild particles if width has changed significantly
+      // Height changes (like mobile address bar) shouldn't reset the whole animation
+      const widthChanged = Math.abs(canvas.width - newWidth) > 5;
+      const noParticles = particlesRef.current.length === 0;
+
+      if (widthChanged || noParticles) {
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        buildParticles(canvas.width, canvas.height);
+      } else {
+        // Just update canvas dimensions if height changed slightly, don't reset particles
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+      }
 
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = requestAnimationFrame(animate);
@@ -227,22 +240,36 @@ const AsciiPortrait: React.FC<AsciiPortraitProps> = ({
       init();
     }
 
-    // Mouse tracking — attached directly here, not in separate effect
-    const handleMouseMove = (e: MouseEvent) => {
+    // Interaction tracking
+    const handleMove = (x: number, y: number) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: x - rect.left,
+        y: y - rect.top,
         active: true,
       };
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        handleMove(touch.clientX, touch.clientY);
+        // Prevent scrolling while interacting with the ASCII art
+        if (e.cancelable) e.preventDefault();
+      }
+    };
+
+    const handleLeave = () => {
       mouseRef.current = { ...mouseRef.current, active: false };
     };
 
     canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
+    canvas.addEventListener("mouseleave", handleLeave);
+    canvas.addEventListener("touchstart", handleTouchMove, { passive: false });
+    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
+    canvas.addEventListener("touchend", handleLeave);
 
     // Resize handler
     const handleResize = () => {
@@ -252,7 +279,10 @@ const AsciiPortrait: React.FC<AsciiPortraitProps> = ({
 
     return () => {
       canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      canvas.removeEventListener("mouseleave", handleLeave);
+      canvas.removeEventListener("touchstart", handleTouchMove);
+      canvas.removeEventListener("touchmove", handleTouchMove);
+      canvas.removeEventListener("touchend", handleLeave);
       window.removeEventListener("resize", handleResize);
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };
