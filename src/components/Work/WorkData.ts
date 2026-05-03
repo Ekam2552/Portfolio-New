@@ -4,6 +4,7 @@ import Novelify from '../../assets/Novelify.mp4';
 import StrongFitVideo from "../../assets/StrongFit Demo.mp4";
 import LuminaDentalVideo from '../../assets/LuminaDental.mp4';
 import VanguardInteriorVideo from '../../assets/VanguardInterior.mp4';
+import FlowPilot from "../../assets/FlowPilot.mp4";
 
 interface WorkData {
   id: number;
@@ -20,25 +21,51 @@ interface WorkData {
 const workData: WorkData[] = [
   {
     id: 1,
-    title: 'Learning App',
+    title: 'Vanguard Interior',
     techStack: [
-      'HTML',
-      'CSS',
-      'SASS',
-      'JavaScript',
-      'React',
-      'Vite',
-      'Node.js',
+      'Next.js',
+      'Tailwind CSS',
+      'GSAP',
       'Figma',
+      'Lenis Smooth Scroll'
+    ],
+    image: null,
+    video: VanguardInteriorVideo,
+    link: 'https://vanguard-interior.vercel.app/',
+  },
+  {
+    id: 2,
+    title: 'Lumina Dental',
+    techStack: [
+      'React',
+      'SCSS',
+      'GSAP',
+      'Supabase',
+      'Vercel'
+    ],
+    image: null,
+    video: LuminaDentalVideo,
+    link: 'https://dental-webapp.vercel.app/',
+  },
+  {
+    id: 3,
+    title: 'Novelify',
+    techStack: [
+      'React',
+      'Node.js',
+      'Express',
+      'PostgreSQL',
+      'Authentication(JWT)',
+      'Stripe',
       'Git',
       'GitHub',
     ],
     image: null,
-    video: Project1Video,
-    link: 'https://learning-app-olive-seven.vercel.app/',
+    video: Novelify,
+    link: 'https://novelify-frontend.vercel.app/',
   },
   {
-    id: 2,
+    id: 4,
     title: 'Meals To Go',
     techStack: [
       'React Native',
@@ -61,24 +88,7 @@ const workData: WorkData[] = [
     },
   },
   {
-    id: 3,
-    title: 'Novelify',
-    techStack: [
-      'React',
-      'Node.js',
-      'Express',
-      'PostgreSQL',
-      'Authentication(JWT)',
-      'Stripe',
-      'Git',
-      'GitHub',
-    ],
-    image: null,
-    video: Novelify,
-    link: 'https://novelify-frontend.vercel.app/',
-  },
-  {
-    id: 4,
+    id: 5,
     title: 'Strong&Fit',
     techStack: [
       'Webflow',
@@ -93,33 +103,38 @@ const workData: WorkData[] = [
     link: 'https://strong-fit.webflow.io/',
   },
   {
-    id: 5,
-    title: 'Lumina Dental',
+    id: 6,
+    title: 'Learning App',
     techStack: [
+      'HTML',
+      'CSS',
+      'SASS',
+      'JavaScript',
       'React',
-      'SCSS',
-      'GSAP',
-      'Supabase',
-      'Vercel'
+      'Vite',
+      'Node.js',
+      'Figma',
+      'Git',
+      'GitHub',
     ],
     image: null,
-    video: LuminaDentalVideo,
-    link: 'https://dental-webapp.vercel.app/',
+    video: Project1Video,
+    link: 'https://learning-app-olive-seven.vercel.app/',
   },
   {
-    id: 6,
-    title: 'Vanguard Interior',
+    id: 7,
+    title: 'FlowPilot',
     techStack: [
-      'Next.js',
-      'Tailwind CSS',
-      'GSAP',
+      'Webflow',
       'Figma',
-      'Lenis Smooth Scroll'
+      'Relume AI',
+      'Responsive Design',
+      'GSAP',
     ],
     image: null,
-    video: VanguardInteriorVideo,
-    link: 'https://vanguard-interior.vercel.app/',
-  },
+    video: FlowPilot,
+    link: 'https://flowpilot-1225f9.webflow.io/',
+  }
 ];
 
 export default workData;
