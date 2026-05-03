@@ -75,7 +75,7 @@ const workData: WorkData[] = [
     ],
     image: null,
     video: Novelify,
-    link: 'https://github.com/Ekam2552/Novelify-Frontend',
+    link: 'https://novelify-frontend.vercel.app/',
   },
   {
     id: 4,
