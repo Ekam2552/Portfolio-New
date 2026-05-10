@@ -5,6 +5,7 @@ import StrongFitVideo from "../../assets/StrongFit Demo.mp4";
 import LuminaDentalVideo from '../../assets/LuminaDental.mp4';
 import VanguardInteriorVideo from '../../assets/VanguardInterior.mp4';
 import FlowPilot from "../../assets/FlowPilot.mp4";
+import JamesBond from "../../assets/James-Bond.mp4"
 
 interface WorkData {
   id: number;
@@ -63,6 +64,22 @@ const workData: WorkData[] = [
     image: null,
     video: Novelify,
     link: 'https://novelify-frontend.vercel.app/',
+  },
+  {
+    id: 4,
+    title: 'James Bond 007',
+    techStack: [
+      'Next.js',
+      'GSAP',
+      'Tailwind CSS',
+      'Figma',
+      'Web Design',
+      'Lenis Smooth Scroll',
+      'Brutalism Design'
+    ],
+    image: null,
+    video: JamesBond,
+    link: 'https://james-bond-tribute.vercel.app/',
   },
   {
     id: 4,
